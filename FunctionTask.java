@@ -5,33 +5,33 @@ public class FunctionTask {
 
 
 
-//    //3.设计一个方法  用来寻找数组中的极值(最大值 或 最小值)
-//    public int extremumArray(int[] a,String b){
-//        int value = a[0];
-//        if(b.equals("最大值")){
-//            for (int i = 1; i < a.length; i++) {
-//                if (value < a[i]) {
-//                    value = a[i];
-//                }
-//            }
-//        }
-//        if(b.equals("最小值")){
-//            for (int i = 1; i < a.length; i++) {
-//                if (value > a[i]) {
-//                    value = a[i];
-//                }
-//            }
-//        }
-//        return value;
-//    }
-//
-//    public static void main(String[] args) {
-//        int[] a = new int[]{1,8,6,3,9,18,66,7,12};
-//        FunctionTask f = new FunctionTask();
-//        int max=f.extremumArray(a,"最大值");
-//        System.out.println(max);
-//
-//    }
+    //3.设计一个方法  用来寻找数组中的极值(最大值 或 最小值)
+    public int extremumArray(int[] a,String b){
+        int value = a[0];
+        if(b.equals("最大值")){
+            for (int i = 1; i < a.length; i++) {
+                if (value < a[i]) {
+                    value = a[i];
+                }
+            }
+        }
+        if(b.equals("最小值")){
+            for (int i = 1; i < a.length; i++) {
+                if (value > a[i]) {
+                    value = a[i];
+                }
+            }
+        }
+        return value;
+    }
+
+    public static void main(String[] args) {
+        int[] a = new int[]{1,8,6,3,9,18,66,7,12};
+        FunctionTask f = new FunctionTask();
+        int max=f.extremumArray(a,"最大值");
+        System.out.println(max);
+
+    }
 
 
 //    //2.设计一个方法  用来交换一个数组(头尾互换)
