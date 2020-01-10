@@ -1,6 +1,10 @@
 package rely;
 
 public class pig {
+    public pig(){}
+    public pig(String name){
+        this.name = name;
+    }
     private String name;
     private int weight = 20;
     public void grow(int month){
@@ -10,5 +14,11 @@ public class pig {
     }
     public void beKilled(){
         System.out.println(this.name+"被杀了，好惨一个猪");
+    }
+    public String getName(){
+        return this.name;
+    }
+    public int getWeight(){
+        return this.weight;
     }
 }
