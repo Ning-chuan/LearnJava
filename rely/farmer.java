@@ -1,8 +1,8 @@
 package rely;
 
-public class farmer {
-    public pig feedPig(int month){
-        pig p = new pig("佩奇");
+public class Farmer {
+    public Pig feedPig(int month){
+        Pig p = new Pig("佩奇");
         p.grow(month);
         return p;
     }

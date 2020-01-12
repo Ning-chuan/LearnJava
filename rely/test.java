@@ -1,10 +1,10 @@
 package rely;
 
-public class test {
+public class Test {
     public static void main(String[] args) {
-        farmer luZhiShen = new farmer();
-        pig peiQi = luZhiShen.feedPig(5);
-        butcher wuSong = new butcher();
+        Farmer luZhiShen = new Farmer();
+        Pig peiQi = luZhiShen.feedPig(5);
+        Butcher wuSong = new Butcher();
         wuSong.killPig(peiQi);
     }
 }

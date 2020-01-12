@@ -1,8 +1,8 @@
 package rely;
 
-public class pig {
-    public pig(){}
-    public pig(String name){
+public class Pig {
+    public Pig(){}
+    public Pig(String name){
         this.name = name;
     }
     private String name;

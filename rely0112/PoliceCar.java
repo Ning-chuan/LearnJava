@@ -1,0 +1,7 @@
+package rely0112;
+
+public class PoliceCar {
+    public boolean pursue(){
+
+    }
+}
