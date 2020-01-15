@@ -8,7 +8,7 @@ public class Computer {
 //    让学生进入机房 使用电脑
 //    扩展:  机房内放置5台电脑  让学生进入机房选择一台关闭的电脑使用
 //    学生也有5个  陆续进入机房
-    public int num;
+    private int num;
     private String condition = "关闭";
     public Computer(){}
     public Computer(int num){
@@ -16,17 +16,20 @@ public class Computer {
     }
     public void beTurnOn(){
         condition = "打开";
-        System.out.println("此时电脑的状态为："+condition);
+        System.out.println("此时"+this.num+"号电脑的状态为："+condition);
     }
     public void beTurnOff(){
         condition = "关闭";
-        System.out.println("此时电脑的状态为："+condition);
+        System.out.println("此时"+this.num+"号电脑的状态为："+condition);
     }
     public void beUsing(){
-        condition = "打开";
-        System.out.println("此时电脑的状态为："+condition);
+        condition = "使用中";
+        System.out.println("此时"+this.num+"号电脑的状态为："+condition);
     }
     public String getCondition(){
         return this.condition;
+    }
+    public int getNum(){
+        return this.num;
     }
 }

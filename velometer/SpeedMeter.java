@@ -2,6 +2,10 @@ package velometer;
 
 public class SpeedMeter {
     private int standardTime = 5;
+    public SpeedMeter(){}
+    public SpeedMeter(int standardTime){
+        this.standardTime = standardTime;
+    }
     public void speedmeter(Car car){
         int carSpeed = car.getSpeed(car);
         int time = 100/carSpeed;
