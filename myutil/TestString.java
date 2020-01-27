@@ -1,5 +1,6 @@
 package myutil;
 
+import java.util.Scanner;
 import java.util.jar.JarOutputStream;
 
 public class TestString {
@@ -85,9 +86,48 @@ public class TestString {
 //            System.out.println(v);
 //        }
 
-        String str = "abcdefgabc";
-        int index = str.lastIndexOf("b",7);
-        System.out.println(index);
+//        String str = "abcdefgabc";
+//        int index = str.lastIndexOf("b",7);
+//        System.out.println(index);
+//        System.out.println(str.indexOf(99,3));
+
+//        String str = "a";
+//        boolean value = str.isEmpty();
+//        System.out.println(value);
+
+//        //登录
+//        String[] userBox = {"宁川-999","西安科技大学-666","建筑学-555"};
+//        Scanner input = new Scanner(System.in);
+//        System.out.println("请输入用户名：");
+//        String name = input.nextLine();
+//        System.out.println("请输入密码：");
+//        String password = input.nextLine();
+//        Boolean mark = true;
+//        for (int i = 0; i < userBox.length; i++) {
+//            String[] value = userBox[i].split("-",2);
+//            if (name.equals(value[0])) {
+//                if(password.equals(value[1])){
+//                    System.out.println("登陆成功");
+//                    mark = false;
+//                }
+//                break;
+//            }
+//        }
+//        if (mark) {
+//            System.out.println("用户名或密码错误");
+//        }
+
+//        String str = "abcdefgh";
+//        //String value = str.substring(4);//子串 从四号索引直到最后一个
+//        String value = str.substring(4,6);//[4,5) 前开后闭区间
+//        System.out.println(value);
+//        String value1 = str.toUpperCase();
+//        String value2 = str.toLowerCase();
+//        System.out.println(value1+"---"+value2);
+
+        String str = "   宁 川  ";
+        str = str.trim();//修剪 前后多余的空格
+        System.out.println(str);
 
     }
 }
