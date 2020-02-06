@@ -5,16 +5,17 @@ import java.io.Serializable;
 public class User implements Serializable {
     private static final long serialVersionUID = -5581975624957396927L;
     private String name;
-    private int password;
-    int balances;
+    private Integer password;
+    private Integer balances;
 
 
-    //获取User相关信息的方法
+
     public User(String name, int password, int balances){
         this.name = name;
         this.password = password;
         this.balances = balances;
     }
+
 
     public String getName(){
         return this.name;
@@ -24,6 +25,15 @@ public class User implements Serializable {
     }
     public int getBalances(){
         return this.balances;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setPassword(Integer password) {
+        this.password = password;
+    }
+    public void setBalances(Integer balances) {
+        this.balances = balances;
     }
 
 
