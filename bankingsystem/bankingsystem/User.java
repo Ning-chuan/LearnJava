@@ -3,16 +3,27 @@ package bankingsystem;
 import java.io.Serializable;
 
 public class User implements Serializable {
+    private static final long serialVersionUID = -5581975624957396927L;
     private String name;
     private int password;
-    private int balances;
+    int balances;
+
+
+    //获取User相关信息的方法
     public User(String name, int password, int balances){
         this.name = name;
         this.password = password;
         this.balances = balances;
     }
+
     public String getName(){
         return this.name;
+    }
+    public int getPassword(){
+        return this.password;
+    }
+    public int getBalances(){
+        return this.balances;
     }
 
 
