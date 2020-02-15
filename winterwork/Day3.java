@@ -12,16 +12,29 @@ public class Day3 {
     //canConstruct("aa", "ab") -> false
     //canConstruct("aa", "aab") -> true
     public boolean canConstruct(String ransomNote, String magazine) {
-        if (magazine.length() < ransomNote.length()){
-            return false;
-        }
-        int caps[] = new int[26];
+//        if (magazine.length() < ransomNote.length()){
+//            return false;
+//        }
+//        int caps[] = new int[26];
+//        for (char c : ransomNote.toCharArray()) {
+//            int index = magazine.indexOf(c, caps[c - 'a']);
+//            if (index == -1){
+//                return false;
+//            }
+//            caps[c - 97] = index + 1;
+//        }
+//        return true;
+
+        //方法二：
+        StringBuilder stringBuilder = new StringBuilder(magazine);
+        int index;
         for (char c : ransomNote.toCharArray()) {
-            int index = magazine.indexOf(c, caps[c - 'a']);
-            if (index == -1){
+            index = stringBuilder.indexOf(String.valueOf(c));
+            if (index >= 0) {
+                stringBuilder.deleteCharAt(index);
+            } else {
                 return false;
             }
-            caps[c - 97] = index + 1;
         }
         return true;
     }
