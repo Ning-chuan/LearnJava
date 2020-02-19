@@ -53,11 +53,39 @@ public class Day10 {
     //你的算法时间复杂度必须是 O(log n) 级别。如果数组中不存在目标值，返回 [-1, -1] .
     //https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/
     public int[] searchRange(int[] nums, int target) {
+        if(nums==null || nums.length==0){
+            return new int[]{-1,-1};
+        }
         int left = 0;
-        int right = nums.length-1;
+        int right = nums.length;
+        while(left<right){//先寻找左边的(第一次出现的)index
+            int mid = (left+right)/2;
+            if (nums[mid]==target){
+                right = mid;
+            }else if(nums[mid]<target){
+                left = mid+1;
+            }else if(nums[mid]>target){
+                right = mid;
+            }
+        }
+        if(left==nums.length || nums[left]!=target){
+            return new int[]{-1,-1};//说明不存在，不必再寻找右值，直接返回
+        }
+        int start = left;
+        //接下来寻找右边的index
+        left = 0;
+        right = nums.length;
         while(left<right){
             int mid = (left+right)/2;
-            if 
+            if (nums[mid]==target){
+                left = mid+1;//只有这一行与寻找左值时不一样
+            }else if(nums[mid]<target){
+                left = mid+1;
+            }else if(nums[mid]>target){
+                right = mid;
+            }
         }
+        int end = left-1;
+        return new int[]{start,end};
     }
 }
