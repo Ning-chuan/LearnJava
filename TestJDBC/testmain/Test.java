@@ -2,10 +2,7 @@ package testmain;
 
 import com.mysql.cj.jdbc.Driver;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Test {
     public static void main(String[] args){
@@ -28,13 +25,16 @@ public class Test {
 //        }
 
 
-
+        Connection conn = null;
+        Statement stat = null;
+        ResultSet rs = null;
         try {
             String className = "com.mysql.cj.jdbc.Driver";
             String url = "jdbc:mysql://localhost:3306/test?serverTimezone=CST";
             String user = "root";
             String password = "root";
-            String sql = "delete from emp where empno=8888";
+            String sql = "select * from emp";
+            //String sql = "delete from emp where empno=8888";
             //String sql = "insert into emp(empno,ename) values(8888,'wzy')";
             //1.导包 （将mysql-connector-java.jar文件导入到当前工程里 新建一个lib包 粘贴进去）
             //2.加载驱动类 Driver 有以下几种方式
@@ -45,14 +45,44 @@ public class Test {
             //System.setProperty("jdbc.driver","com.mysql.cj.jdbc.Driver");// 4
             //3.获取连接
 
-            Connection conn = DriverManager.getConnection(url,user,password);
+            conn = DriverManager.getConnection(url,user,password);
             //4.创建状态参数 (流)
-            Statement stat = conn.createStatement();
+            stat = conn.createStatement();
             //5.执行数据库操作
-            int count = stat.executeUpdate(sql);
-            System.out.println(count);
+            //int count = stat.executeUpdate(sql);
+            rs = stat.executeQuery(sql);
+            while(rs.next()){
+                int empno = rs.getInt("empno");
+                String ename = rs.getString("ename");
+                String job = rs.getString("job");
+                float sal = rs.getFloat("sal");
+                System.out.println(empno+"--"+ename+"--"+job+"--"+sal);
+            }
+            System.out.println("执行完毕");
         } catch (Exception e) {
             e.printStackTrace();
+        }finally{
+            try {
+                if(rs!=null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if(stat!=null) {
+                    stat.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
