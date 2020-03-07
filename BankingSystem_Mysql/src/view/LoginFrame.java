@@ -4,16 +4,25 @@ import util.BaseFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginFrame extends BaseFrame {
-
-    public LoginFrame(){}
-    public LoginFrame(String title){
-        super(title);
+    //单例模式
+    private LoginFrame(){
+        super("登录窗口");
         this.init();
     }
+    private static LoginFrame loginFrame;
+    public synchronized static LoginFrame getLoginFrame(){
+        if(loginFrame==null){
+            loginFrame = new LoginFrame();
+        }
+        return loginFrame;
+    }
 
-
+    //添加一个注册窗口 作为属性
+    private RegisterFrame registerFrame = null;
 
     private JPanel mainPanel = new JPanel();
     private JLabel logoLabel = new JLabel();//logo
@@ -21,7 +30,7 @@ public class LoginFrame extends BaseFrame {
     private JLabel accountLabel = new JLabel("请输入账号:");
     private JTextField accountField = new JTextField();
     private JLabel passwordLabel = new JLabel("请输入密码:");
-    private JTextField passwordField = new JTextField();
+    private JPasswordField passwordField = new JPasswordField();
     private JButton loginButton = new JButton("登录");
     private JButton registButton = new JButton("注册");
 
@@ -63,7 +72,26 @@ public class LoginFrame extends BaseFrame {
 
     @Override
     protected void addListener() {
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //调用登陆方法
+                LoginFrame.this.setVisible(false);
+                AtmFrame.getAtmFrame();
+            }
+        });
 
+        registButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoginFrame.this.setVisible(false);
+                if(registerFrame==null){
+                    registerFrame = RegisterFrame.getRegisterFrame("注册一个老公银行账号");
+                }else{
+                    registerFrame.setVisible(true);
+                }
+            }
+        });
     }
 
     @Override
