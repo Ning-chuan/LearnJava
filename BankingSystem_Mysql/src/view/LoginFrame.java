@@ -1,5 +1,6 @@
 package view;
 
+import service.AtmService;
 import util.BaseFrame;
 
 import javax.swing.*;
@@ -24,6 +25,7 @@ public class LoginFrame extends BaseFrame {
     //添加一个注册窗口 作为属性
     private RegisterFrame registerFrame = null;
 
+
     private JPanel mainPanel = new JPanel();
     private JLabel logoLabel = new JLabel();//logo
     private JLabel titleLabel = new JLabel("老  公  银  行");
@@ -40,7 +42,7 @@ public class LoginFrame extends BaseFrame {
     protected void setFontAndSoOn() {
         mainPanel.setLayout(null);
         logoLabel.setBounds(135,40,40,40);
-        logoLabel.setIcon(this.drawImage("",40,40));
+        logoLabel.setIcon(this.drawImage("src//img//Husband.jpg",60,60));
         titleLabel.setBounds(185,40,200,40);
         titleLabel.setFont(new Font("微软雅黑",Font.BOLD,24));
         accountLabel.setBounds(40,100,140,40);
@@ -75,9 +77,20 @@ public class LoginFrame extends BaseFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //调用登陆方法
-                LoginFrame.this.setVisible(false);
-                AtmFrame.getAtmFrame();
+                //获取用户名和密码
+                String aname = accountField.getText();
+                String apassword = new String(passwordField.getPassword());
+                //调用登录方法
+                AtmService service = new AtmService();
+                String result = service.login(aname,apassword);
+                if(result.equals("登录成功")) {
+                    LoginFrame.this.setVisible(false);
+                    AtmFrame.getAtmFrame(aname);
+                }else{
+                    JOptionPane.showMessageDialog(LoginFrame.this,result);
+                    accountField.setText("");
+                    passwordField.setText("");
+                }
             }
         });
 
@@ -88,15 +101,23 @@ public class LoginFrame extends BaseFrame {
                 if(registerFrame==null){
                     registerFrame = RegisterFrame.getRegisterFrame("注册一个老公银行账号");
                 }else{
+                    registerFrame.cleanText();
                     registerFrame.setVisible(true);
                 }
             }
         });
     }
 
+    //设计一个方法 清空所有文本框
+    void cleanText(){//默认不写修饰符 适用范围为 同包
+        accountField.setText("");
+        passwordField.setText("");
+    }
+
+
     @Override
     protected void setFrameSelf() {
-        this.setBounds(650,350,500,340);
+        this.setBounds(700,380,500,340);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
         this.setVisible(true);

@@ -1,6 +1,8 @@
 package view;
 
+import service.AtmService;
 import util.BaseFrame;
+import util.MySpring;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +26,9 @@ public class RegisterFrame extends BaseFrame {
     }
 
 
+    //添加一个登录页面的属性
+    private LoginFrame loginFrame = LoginFrame.getLoginFrame();
+
     //添加一些组件的属性
     private JPanel mainPanel = new JPanel();
     private JLabel logoLabel = new JLabel();//logo
@@ -43,7 +48,7 @@ public class RegisterFrame extends BaseFrame {
     protected void setFontAndSoOn() {
         mainPanel.setLayout(null);
         logoLabel.setBounds(135,40,40,40);
-        logoLabel.setIcon(this.drawImage("",40,40));
+        logoLabel.setIcon(this.drawImage("src//img//Husband.jpg",40,40));
         titleLabel.setBounds(185,40,200,40);
         titleLabel.setFont(new Font("微软雅黑", Font.BOLD,24));
         accountLabel.setBounds(40,100,140,40);
@@ -87,30 +92,59 @@ public class RegisterFrame extends BaseFrame {
         registButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //获取用户输入的用户名 密码 余额
+                String aname = accountField.getText();
+                String apassword = passwordField.getText();
+                String abalance = balanceField.getText();
+                //获取一个AtmService对象
+                AtmService service = MySpring.getBean("service.AtmService");
+                if(service.isExist(aname)){
+                    JOptionPane.showMessageDialog(RegisterFrame.this,"用户名已存在");
+                    RegisterFrame.this.cleanText();
+                }else{
+                    try{
+                        service.register(aname,apassword,Float.parseFloat(abalance));
+                        //上一行 如果abalance输入有误 会出现NumberFormatException 我们用 try catch 处理一下
+                        JOptionPane.showMessageDialog(RegisterFrame.this,"注册成功，请返回并登录");
+                        RegisterFrame.this.back();
+                    }catch(Exception ep){
+                        JOptionPane.showMessageDialog(RegisterFrame.this,"非法输入");
+                        RegisterFrame.this.cleanText();
+                    }
+                }
             }
         });
 
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                accountField.setText("");
-                passwordField.setText("");
-                balanceField.setText("");
+                RegisterFrame.this.cleanText();
             }
         });
 
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                accountField.setText("");
-                passwordField.setText("");
-                balanceField.setText("");
-                registerFrame.setVisible(false);
-                LoginFrame.getLoginFrame().setVisible(true);
+                RegisterFrame.this.back();
             }
         });
     }
+
+    //设计一个方法 清空所有文本框
+    void cleanText(){//默认不写修饰符 适用范围为 同包
+        accountField.setText("");
+        passwordField.setText("");
+        balanceField.setText("");
+    }
+    //设计一个方法 退回登录窗口
+    private void back(){
+        RegisterFrame.this.cleanText();
+        registerFrame.setVisible(false);
+        loginFrame.setVisible(true);
+        loginFrame.cleanText();
+    }
+
+
 
     @Override
     protected void setFrameSelf() {
