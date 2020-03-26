@@ -14,10 +14,10 @@ public class ConnectionPool {
         return connectionPool;
     }
 
-    private static final int DEFAULT_CAPACITY = 10;
+    private static final int DEFAULT_CONNECTIONS = 10;
     private ArrayList<MyConnection> list = new ArrayList<>();
     {
-        while(list.size()<DEFAULT_CAPACITY){
+        while(list.size()< DEFAULT_CONNECTIONS){
             list.add(new MyConnection());
         }
     }

@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 public class TestMain {
     public static void main(String[] args) throws Exception {
         long t1 = System.currentTimeMillis();
-        ConnectionPool cp = new ConnectionPool();
+        ConnectionPool cp = ConnectionPool.getInstance();
         MyConnection mc = cp.getMyConnection();
         long t2 = System.currentTimeMillis();
         mc.setCanUsed(false);
