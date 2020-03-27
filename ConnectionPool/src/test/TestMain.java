@@ -20,11 +20,6 @@ public class TestMain {
 
 
 
-
-
-
-
-
 //        TestThread t1 = new TestThread();
 //        TestThread t2 = new TestThread();
 //        TestThread t3 = new TestThread();
