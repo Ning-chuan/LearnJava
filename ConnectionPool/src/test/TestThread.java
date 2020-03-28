@@ -1,5 +1,8 @@
 package test;
 
+import pool.ConnectionPool;
+import pool.MyConnection;
+
 public class TestThread extends Thread{
     public void run(){
         //模拟ConnectionPool的使用
