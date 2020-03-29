@@ -3,8 +3,6 @@ package service;
 import dao.StudentDao;
 import domain.Student;
 
-import java.sql.SQLException;
-
 public class StudentService {
     private StudentDao dao = new StudentDao();
 
@@ -13,8 +11,14 @@ public class StudentService {
     public void insert(Student student) throws Exception {
         dao.insert(student);
     }
+    public void insert(Object... obj) throws Exception {
+        dao.insert(obj);
+    }
 
-    public void update(Student student) throws Exception {
-        dao.update(student);
+    public void update(Object obj) throws Exception {
+        dao.update(obj);
+    }
+    public void update(Object... obj) throws Exception {
+        dao.update(obj);
     }
 }

@@ -7,13 +7,21 @@ import service.StudentService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestMain {
     public static void main(String[] args) throws Exception {
         StudentService service = new StudentService();
-//        service.insert(new Student(6,"FLY","男",19));
-        service.update(new Student(6,"渡劫","男",18));
+//        service.insert(new Student(6," FLY","男",19));
+//        Map<String,Object> map = new HashMap<>();
+//        map.put("sid",6);
+//        map.put("sname","渡劫");
+//        map.put("sex","男");
+//        map.put("sage",19);
+//        service.update(map);
 //        service.insert(new Student(7,"花满楼","男",19));
+        service.insert(7,"花满楼","男",18);
 
 
 
@@ -84,8 +92,6 @@ public class TestMain {
 //        pstat1.close();
 //        rs1.close();
 //        mc1.setCanUsed(true);
-
-
 
 
 

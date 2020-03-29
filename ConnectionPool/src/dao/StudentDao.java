@@ -9,27 +9,23 @@ public class StudentDao {
     //新增的方法
     public void insert(Student student) throws Exception {
         String sql = "INSERT INTO STUDENT VALUES(#{sid},#{sname},#{sex},#{sage})";
-        sqlSession.myUpdate(student,sql);
+        sqlSession.myUpdate(sql,student);
+    }
+    //新增的方法 方法二 Object数组
+    public void insert(Object... obj) throws Exception {
+        String sql = "INSERT INTO STUDENT VALUES(?,?,?,?)";
+        sqlSession.myUpdate(sql,obj);
     }
 
-    //修改的方法
-    public void update(Student student) throws Exception {
-        //自定sql规则 为了解析和赋值
+    //修改的方法 方法一 自定sql规则 为了解析和赋值
+    public void update(Object obj) throws Exception {
         String sql = "UPDATE STUDENT SET SNAME=#{sname},SEX=#{sex},SAGE=#{sage} WHERE SID=#{sid}";
-        sqlSession.myUpdate(student,sql);
+        sqlSession.myUpdate(sql,obj);
+    }
 
-
-
-//        String sql = "UPDATE STUDENT SET SNAME=?,SEX=?,SAGE=? WHERE SID=?";
-//        ConnectionPool pool = ConnectionPool.getInstance();
-//        Connection conn = pool.getMyConnection();
-//        PreparedStatement pstat = conn.prepareStatement(sql);
-//        pstat.setString(1,student.getSname());
-//        pstat.setString(2,student.getSex());
-//        pstat.setInt(3,student.getSage());
-//        pstat.setInt(4,student.getSid());
-//        pstat.executeUpdate();
-//        pstat.close();
-//        conn.close();
+    //修改的方法 方法二 Object数组
+    public void update(Object... obj) throws Exception {
+        String sql = "UPDATE STUDENT SET SNAME=?,SEX=?,SAGE=? WHERE SID=?";
+        sqlSession.myUpdate(sql,obj);
     }
 }
