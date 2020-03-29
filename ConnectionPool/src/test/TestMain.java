@@ -1,6 +1,8 @@
 package test;
 
+import domain.Student;
 import pool.ConnectionPool;
+import service.StudentService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,18 +10,25 @@ import java.sql.ResultSet;
 
 public class TestMain {
     public static void main(String[] args) throws Exception {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection conn = connectionPool.getMyConnection();
-        PreparedStatement pstat = conn.prepareStatement("SELECT * FROM PERSON;");
-        ResultSet rs = pstat.executeQuery();
-        while(rs.next()){
-            System.out.println(rs.getString("username")+"--"+rs.getString("address"));
-        }
-        conn.close();
-        pstat.close();
-        rs.close();
+        StudentService service = new StudentService();
+//        service.insert(new Student(6,"FLY","男",19));
+        service.update(new Student(6,"渡劫","男",18));
+//        service.insert(new Student(7,"花满楼","男",19));
 
 
+
+
+
+//        ConnectionPool connectionPool = ConnectionPool.getInstance();
+//        Connection conn = connectionPool.getMyConnection();
+//        PreparedStatement pstat = conn.prepareStatement("SELECT * FROM PERSON;");
+//        ResultSet rs = pstat.executeQuery();
+//        while(rs.next()){
+//            System.out.println(rs.getString("username")+"--"+rs.getString("address"));
+//        }
+//        conn.close();
+//        pstat.close();
+//        rs.close();
 
 
 //        TestThread t1 = new TestThread();
