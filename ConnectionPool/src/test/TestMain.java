@@ -21,8 +21,8 @@ public class TestMain {
 //        map.put("sage",19);
 //        service.update(map);
 //        service.insert(new Student(7,"花满楼","男",19));
-        service.insert(7,"花满楼","男",18);
-
+//        service.insert(7,"花满楼","男",18);
+        service.delete(5);
 
 
 

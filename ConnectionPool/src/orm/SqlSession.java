@@ -17,7 +17,7 @@ public class SqlSession {
     //让用户传一个我们规定好格式的sql语句 我们自己来解析
     //类似Mybatis
     public void myUpdate(String sql,Object obj) throws Exception {
-        //sql为我们规定的格式 需要解析成可用的 因此设计一个专门解析的方法
+        //sql为我们规定的格式 需要解析成可用的 因此设计一个专门解析的方法 在Handler类里面
         SqlAndKey sak = handler.analyzeSql(sql);
         String newSql = sak.getSql();
         ArrayList<String> keyList = sak.getKeyList();
@@ -40,8 +40,10 @@ public class SqlSession {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection conn = connectionPool.getMyConnection();
         PreparedStatement pstat = conn.prepareStatement(sql);
-        for(int i=0;i<obj.length;i++){
-            pstat.setObject(i+1,obj[i]);
+        if(obj != null) {
+            for (int i = 0; i < obj.length; i++) {
+                pstat.setObject(i + 1, obj[i]);
+            }
         }
         pstat.executeUpdate();
         pstat.close();
