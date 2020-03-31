@@ -3,15 +3,18 @@ package orm;
 
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 
 public class Handler {
 
     /**
-     *
+     * 为了支持SqlSession中方法一（Mybatis方式）的方法所设计的辅助类
      */
 
     //设计方法 按照keys给sql语句的问号逐个赋值 需要用到反射
@@ -43,12 +46,6 @@ public class Handler {
         }
         return pstat;
     }
-    //处理obj是map集合的情况
-    //public void
-
-
-
-
 
 
     //解析sql的方法 eg. INSERT INTO STUDENT VALUES(#{sid},#{sname},#{sex},#{sage})
@@ -74,5 +71,59 @@ public class Handler {
         return new SqlAndKey(newSql.toString(),keys);
     }
 
+    //处理结果的方法
+    //ResultSet是结果集 resultType是结果的类型 我们可以根据所需将结果的类型来分情况处理
+    public Object handleResult(ResultSet rs, Class resultType) throws SQLException {
+        Object result = null;
+        if(resultType==int.class || resultType==Integer.class){
+            result = rs.getInt(1);
+        }else if(resultType==float.class || resultType==Float.class){
+            result = rs.getFloat(1);
+        }else if(resultType==double.class || resultType==Double.class){
+            result = rs.getDouble(1);
+        }else if(resultType==String.class){
+            result  =rs.getString(1);
+        }else if(resultType.isArray()){
+            //暂不支持
+        }else if(resultType==Map.class){
+            result = this.handleMap(rs);
+        }else{//以上都不是 说明是domain对象
+            //另设方法处理
+            result = this.handleDomain(rs,resultType);
+        }
+        return result;
+    }
 
+    private Map<String,Object> handleMap(ResultSet rs) throws SQLException {
+        Map result = new HashMap();
+        ResultSetMetaData rsmd = rs.getMetaData();
+        for(int i=1;i<rsmd.getColumnCount();i++){
+            String column = rsmd.getColumnName(i);
+            Object value = rs.getObject(column);
+            result.put(column,value);
+        }
+        return result;
+    }
+    private Object handleDomain(ResultSet rs,Class resultType) throws SQLException {
+        Object obj = null;
+        try {
+            obj = resultType.newInstance();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            for(int i=1;i<rsmd.getColumnCount();i++){
+                //获取列名
+                String column = rsmd.getColumnName(i);
+                //获取属性
+                Field field = resultType.getDeclaredField(column);
+                field.setAccessible(true);
+                field.set(obj,rs.getObject(column));
+            }
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
 }

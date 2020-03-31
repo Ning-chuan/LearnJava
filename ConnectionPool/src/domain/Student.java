@@ -15,6 +15,10 @@ public class Student {
         this.sage = sage;
     }
 
+    public String toString(){
+        return "{sid="+this.sid+",sname="+this.sname+",sex="+this.sex+",sage="+this.sage+"}";
+    }
+
     public Integer getSid() {
         return sid;
     }

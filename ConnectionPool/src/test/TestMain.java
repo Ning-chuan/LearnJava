@@ -7,12 +7,22 @@ import service.StudentService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestMain {
     public static void main(String[] args) throws Exception {
         StudentService service = new StudentService();
+        List<Student> list = service.selectList();
+        for(Student student:list){
+            System.out.println(student);
+        }
+//        Student student = service.selectOne(7);
+//        System.out.println(student);
+
+
 //        service.insert(new Student(6," FLY","男",19));
 //        Map<String,Object> map = new HashMap<>();
 //        map.put("sid",6);
@@ -22,9 +32,7 @@ public class TestMain {
 //        service.update(map);
 //        service.insert(new Student(7,"花满楼","男",19));
 //        service.insert(7,"花满楼","男",18);
-        service.delete(5);
-
-
+//        service.delete(5);
 
 
 //        ConnectionPool connectionPool = ConnectionPool.getInstance();
