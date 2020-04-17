@@ -7,10 +7,10 @@ import java.net.Socket;
 public class Server {
 
 
-    private void server(){
+    public void startServer(){
         try {
             System.out.println("=====服务开启=====");
-            ServerSocket server = new ServerSocket();
+            ServerSocket server = new ServerSocket(9999);
             while(true) {
                 //等待客户连接
                 Socket socket = server.accept();
