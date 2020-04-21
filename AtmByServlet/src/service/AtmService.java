@@ -20,4 +20,14 @@ public class AtmService {
         }
         return result;
     }
+
+    public Float inquiry(String aname){
+        return dao.selectOne(aname).getAbalance();
+    }
+
+    public void deposit(String aname, String depositMoney) {
+        User user = dao.selectOne(aname);
+        user.setAbalance(user.getAbalance()+Float.parseFloat(depositMoney));
+        dao.update(user);
+    }
 }

@@ -40,4 +40,22 @@ public class AtmDao {
     }
 
 
+    //更新一条语句
+    public void update(User user){
+        String sql = "UPDATE USERS SET APASSWORD=?,ABALANCE=? WHERE ANAME=?";
+        try {
+            Class.forName(driver);
+            Connection conn = DriverManager.getConnection(url, userName, password);
+            PreparedStatement pstat = conn.prepareStatement(sql);
+            pstat.setString(1,user.getApassword());
+            pstat.setFloat(2,user.getAbalance());
+            pstat.setString(3,user.getAname());
+            pstat.executeUpdate();
+            pstat.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

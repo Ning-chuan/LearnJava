@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class LoginController extends HttpServlet {
-    public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
+public class DepositController extends HttpServlet {
 
-        String aname = request.getParameter("aname");
-        String apassword = request.getParameter("apassword");
-        System.out.println("接收到浏览器的aname："+aname+"  apassword:"+apassword);
-
-
-        AtmService Service = MySpring.getBean("service.AtmService");
-        String result = Service.login(aname,apassword);
-        System.out.println("Service判定的结果为："+result);
-
-        response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //1 设置接受字符集
+        req.setCharacterEncoding("UTF-8");
+        //2 获取名字和存款金额
+        String aname = req.getParameter("aname");
+        String depositMoney = req.getParameter("depositMoney");
+        //3 调用service层存款方法
+        AtmService service = MySpring.getBean("service.AtmService");
+        service.deposit(aname,depositMoney);
+        //4 存款之后页面恢复到登陆时的样子
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter out = resp.getWriter();
         out.write("<html>");
         out.write(" <head>");
         out.write("     <meta charset=\"UTF-8\">");//浏览器按照此字符集解析
