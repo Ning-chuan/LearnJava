@@ -23,16 +23,6 @@
         <url-pattern>/inquiry</url-pattern>
     </servlet-mapping>
 
-    <!-- 存款展示页面 -->
-    <servlet>
-        <servlet-name>depositPage</servlet-name>
-        <servlet-class>controller.DepositPageController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>depositPage</servlet-name>
-        <url-pattern>/depositPage</url-pattern>
-    </servlet-mapping>
-
     <!-- 存款 -->
     <servlet>
         <servlet-name>deposit</servlet-name>
