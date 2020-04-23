@@ -9,7 +9,6 @@
     %>
     <form action="deposit" method="get">
         请输入存款金额：<input type="text" name="depositMoney" value=""><br>
-        <input type="hidden" name="aname" value="<%=aname%>">
         <input type="submit" value="确定">
     </form>
 </body>

@@ -14,6 +14,9 @@
 <body>
     <%
         String aname = request.getParameter("aname");
+        if(aname==null){
+            aname = (String)session.getAttribute("aname");
+        }
         Float abalance = (Float)request.getAttribute("abalance");
     %>
     ==== 尊敬的<%=aname%>，您的余额为：====<br>

@@ -7,8 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class DepositController extends HttpServlet {
 
@@ -18,6 +18,10 @@ public class DepositController extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         //2 获取名字和存款金额
         String aname = req.getParameter("aname");
+        if(aname==null){
+            HttpSession session = req.getSession();
+            aname = (String)session.getAttribute("aname");
+        }
         String depositMoney = req.getParameter("depositMoney");
         //3 调用service层存款方法
         AtmService service = MySpring.getBean("service.AtmService");
