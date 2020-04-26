@@ -1,6 +1,6 @@
 package controller;
 
-import service.ShoppingService;
+import service.UserService;
 import util.MySpring;
 
 import javax.servlet.ServletException;
@@ -19,13 +19,15 @@ public class LoginController extends HttpServlet {
         String uname = req.getParameter("uname");
         String upassword = req.getParameter("upassword");
         //2 调用service层方法
-        ShoppingService service = MySpring.getBean("ShoppingService");
+        UserService service = MySpring.getBean("service.UserService");
         String result = service.login(uname,upassword);
         //
         if("登陆成功".equals(result)){
             req.getRequestDispatcher("welcome.jsp").forward(req,resp);
         }else{
-            req.getRequestDispatcher("index.html").forward(req,resp);
+            //把登陆失败的信息返回给浏览器展示给用户  通过request对象
+            req.setAttribute("result",result);
+            req.getRequestDispatcher("index.jsp").forward(req,resp);
         }
     }
 }

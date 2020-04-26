@@ -16,13 +16,13 @@ public class UserDao {
 
 
     public User selectOne(String uname){
-            User user = null;
+        User user = null;
         String sql = "SELECT UNAME,UPASSWORD FROM USERS WHERE UNAME=?";
         try {
             Class.forName(driver);
             Connection conn = DriverManager.getConnection(url,userName,password);
             PreparedStatement pstat = conn.prepareStatement(sql);
-            pstat.setString(1,"uname");
+            pstat.setString(1,uname);
             ResultSet rs = pstat.executeQuery();
             if(rs.next()){
                 String upassword = rs.getString("upassword");
