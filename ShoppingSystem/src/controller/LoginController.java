@@ -21,5 +21,11 @@ public class LoginController extends HttpServlet {
         //2 调用service层方法
         ShoppingService service = MySpring.getBean("ShoppingService");
         String result = service.login(uname,upassword);
+        //
+        if("登陆成功".equals(result)){
+            req.getRequestDispatcher("welcome.jsp").forward(req,resp);
+        }else{
+            req.getRequestDispatcher("index.html").forward(req,resp);
+        }
     }
 }
