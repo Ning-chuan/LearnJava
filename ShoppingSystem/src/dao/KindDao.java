@@ -1,33 +1,31 @@
 package dao;
 
-import domain.User;
+import domain.Kind;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
-public class UserDao {
-
+public class KindDao {
     String driver = "com.mysql.cj.jdbc.Driver";
     String url = "jdbc:mysql://localhost:3306/shopping?serverTimezone=CST";
     String userName = "root";
     String password = "root";
-
-
-    public User selectOne(String uname){
-        User user = null;
-        String sql = "SELECT UNAME,UPASSWORD FROM USERS WHERE UNAME=?";
+    public ArrayList<Kind> selectAllKinds(){
+        ArrayList<Kind> kindList = new ArrayList<>();
+        String sql = "SELECT KID,KNAME FROM KINDS";
         try {
             Class.forName(driver);
             Connection conn = DriverManager.getConnection(url,userName,password);
             PreparedStatement pstat = conn.prepareStatement(sql);
-            pstat.setString(1,uname);
             ResultSet rs = pstat.executeQuery();
-            if(rs.next()){
-                String upassword = rs.getString("upassword");
-                System.out.println(upassword);
-                user = new User(uname,upassword);
+            while(rs.next()){
+                Integer kid = rs.getInt("kid");
+                String kname = rs.getString("kname");
+                Kind kind = new Kind(kid,kname);
+                kindList.add(kind);
             }
             rs.close();
             pstat.close();
@@ -35,6 +33,11 @@ public class UserDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return user;
+        return kindList;
     }
+
+
+
+
+
 }
