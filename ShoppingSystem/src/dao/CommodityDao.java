@@ -33,7 +33,7 @@ public class CommodityDao {
                 commodity.setCprice(rs.getFloat("cprice"));
                 //下面的kind也可以去掉
                 Kind kind = new Kind();
-                kind.setKid(rs.getInt(kid));
+                kind.setKid(rs.getInt("kid"));
                 commodity.setKind(kind);
                 commodityList.add(commodity);
             }
@@ -46,5 +46,31 @@ public class CommodityDao {
         return commodityList;
     }
 
-
+    //获取一个商品(查询一条记录)
+    public Commodity selectOne(int cid){
+        Commodity result = null;
+        String sql  = "SELECT CID,CNAME,CPRICE,KID FROM COMMODITY WHERE CID=?";
+        try {
+            Class.forName(driver);
+            Connection conn = DriverManager.getConnection(url,userName,password);
+            PreparedStatement pstat = conn.prepareStatement(sql);
+            pstat.setInt(1,cid);
+            ResultSet rs = pstat.executeQuery();
+            if(rs.next()){
+                result = new Commodity();
+                result.setCid(cid);
+                result.setCname(rs.getString("cname"));
+                result.setCprice(rs.getFloat("cprice"));
+                Kind kind = new Kind();
+                kind.setKid(rs.getInt("kid"));
+                result.setKind(kind);
+            }
+            rs.close();
+            pstat.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

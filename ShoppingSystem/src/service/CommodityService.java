@@ -16,4 +16,8 @@ public class CommodityService {
         return dao.selectCommodity(kid);
     }
 
+    //获取一个商品(查询一条记录)
+    public Commodity selectOne(int cid){
+        return dao.selectOne(cid);
+    }
 }

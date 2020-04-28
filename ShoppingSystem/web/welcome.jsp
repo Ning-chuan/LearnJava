@@ -18,7 +18,7 @@
     <select id="kindSelect" name="kid">
             <option>==请选择==</option>
             <%
-                ArrayList<Kind> kindList = (ArrayList<Kind>) request.getAttribute("kindList");
+                ArrayList<Kind> kindList = (ArrayList<Kind>) session.getAttribute("kindList");
                 for(Kind kind:kindList){
                     String kname = kind.getKname();
                     out.write("<option value=\""+kind.getKid()+"\">"+kname+"</option>");
