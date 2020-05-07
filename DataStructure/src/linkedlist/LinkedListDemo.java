@@ -7,33 +7,54 @@ public class LinkedListDemo {
         //测试一把
         HeroNode hero1 = new HeroNode(1,"宋江","及时雨");
         HeroNode hero2 = new HeroNode(2,"卢俊义","玉麒麟");
-        HeroNode hero3 = new HeroNode(3,"吴用","智多星");
-        HeroNode hero4 = new HeroNode(4,"林冲","豹子头");
+        HeroNode hero3 = new HeroNode(7,"秦明","霹雳火");
+        HeroNode hero4 = new HeroNode(6,"林冲","豹子头");
 
         SingleLinkedList list = new SingleLinkedList();
-        list.show();
         list.addByNo(hero1);
         list.addByNo(hero3);
         list.addByNo(hero2);
         //list.addByNo(hero2);
         list.addByNo(hero4);
+        System.out.println("---------链表一展示---------");
         list.show();
 
-        //测试修改方法
-        list.update(new HeroNode(3,"小吴","加亮先生"));
-        System.out.println("----修改后的链表----");
-        list.show();
+        HeroNode hero5 = new HeroNode(5,"关胜","大刀");
+        HeroNode hero6 = new HeroNode(4,"公孙胜","入云龙");
+        HeroNode hero7 = new HeroNode(9,"小李广","花荣");
+        HeroNode hero8 = new HeroNode(10,"柴进","小旋风");
+        HeroNode hero9 = new HeroNode(13,"鲁智深","花和尚");
+        SingleLinkedList list2 = new SingleLinkedList();
+        list2.addByNo(hero5);
+        list2.addByNo(hero6);
+        list2.addByNo(hero7);
+        list2.addByNo(hero8);
+        list2.addByNo(hero9);
+        System.out.println("---------链表二展示---------");
+        list2.show();
 
-        //测试计算节点个数方法
-        HeroNode head = list.getHead();
-        System.out.println("有效节点个数为:"+getLength(head));
-        //测试 找到倒数第k个节点方法
-        System.out.println("倒数第1个节点为："+findLastIndexNode(head,1));
+        HeroNode newHead = combineList(list.getHead(),list2.getHead());
+        System.out.println("---------合并后展示---------");
+        reverseList(newHead);
+        reversePrint(newHead);
 
-        reverseList(head);
-        list.show();
 
-        reversePrint(head);
+
+//        //测试修改方法
+//        list.update(new HeroNode(3,"小吴","加亮先生"));
+//        System.out.println("----修改后的链表----");
+//        list.show();
+//
+//        //测试计算节点个数方法
+//        HeroNode head = list.getHead();
+//        System.out.println("有效节点个数为:"+getLength(head));
+//        //测试 找到倒数第k个节点方法
+//        System.out.println("倒数第1个节点为："+findLastIndexNode(head,1));
+//
+//        reverseList(head);
+//        list.show();
+//
+//        reversePrint(head);
 
 //        list.del(3);
 //        list.del(1);
@@ -114,6 +135,37 @@ public class LinkedListDemo {
         }
     }
 
+    //5.合并两个本来有序的单链表
+    public static HeroNode combineList(HeroNode headOne,HeroNode headTwo){
+        HeroNode newHead = new HeroNode(0,"","");
+        HeroNode temp1 = headOne.next;
+        HeroNode temp2 = headTwo.next;
+        HeroNode tempNew = newHead;
+        while(true){
+            if(temp1 == null && temp2 == null){
+                break;
+            }
+            if(temp1 == null){
+                tempNew.next = temp2;
+                break;
+            }
+            if(temp2 == null){
+                tempNew.next = temp1;
+                break;
+            }
+            if(temp1.no > temp2.no){
+                tempNew.next = temp2;
+                temp2 = temp2.next;
+            }else{
+                tempNew.next = temp1;
+                temp1 = temp1.next;
+            }
+            tempNew = tempNew.next;
+        }
+        return newHead;
+    }
+
+
 }
 
 
@@ -124,7 +176,6 @@ class SingleLinkedList{
     public HeroNode getHead(){
         return this.head;
     }
-
 
     //添加节点 （不考虑排名，直接添加在链表末尾）
     public void add(HeroNode node){
