@@ -2,6 +2,7 @@ package controller;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.ProgressListener;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -17,10 +18,19 @@ public class SaveFileController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             DiskFileItemFactory factory = new DiskFileItemFactory();
-            factory.setSizeThreshold(10240000);//设置缓冲区大小
+            factory.setSizeThreshold(1024*1024*1024);//设置缓冲区大小
             ServletFileUpload upload = new ServletFileUpload(factory);
             //upload.setFileSizeMax(10240000);设置单个上传文件大小
-            upload.setSizeMax(102400000);//设置上传文件总大小
+            upload.setSizeMax(1024*1024*1024);//设置上传文件总大小 1G
+
+            //补充：upload可以设置一个监听上传进程的方法
+            upload.setProgressListener(new ProgressListener() {
+                public void update(long l, long l1, int i) {
+                    //第一个参数 代表已经上传的字节数
+                    //第二个参数 表示文件总字节数
+                    //第三个参数 表示正在上传第几个组件
+                }
+            });
 
             //用ServletFileUpload对象解析request
             List<FileItem> list = upload.parseRequest(req);
@@ -37,8 +47,6 @@ public class SaveFileController extends HttpServlet {
                     //调用自己定义的判断文件类型的方法
                     if (this.isRightType(fileName)) {//是我们支持的类型
 
-
-                        InputStream inputStream = item.getInputStream();//获取一个输入流  读取网络传递过来的文件内容
                         //item.write(new File("D://test/" + fileName));//放在固定位置 可移植性不好
 
                         //获取当前文件的根目录
@@ -47,6 +55,7 @@ public class SaveFileController extends HttpServlet {
                         item.write(new File(path+"/WEB-INF/lib/"+fileName));
 
 //                        //原生方式实现文件上传
+//                        InputStream inputStream = item.getInputStream();//获取一个输入流  读取网络传递过来的文件内容
 //                        OutputStream outputStream = new FileOutputStream("D://test/" + fileName);
 //                        //输入流先读取到提前定义好的数组里
 //                        byte[] b = new byte[1024];
