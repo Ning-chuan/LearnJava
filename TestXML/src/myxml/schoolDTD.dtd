@@ -1,0 +1,25 @@
+<!ELEMENT school (class*)>
+<!ELEMENT class (teacher*,student*)>
+<!ELEMENT teacher (subject)>
+<!ELEMENT student (sex)>
+<!ELEMENT subject (#PCDATA)>
+<!ELEMENT sex (#PCDATA)>
+
+<!ATTLIST school
+    id CDATA #IMPLIED
+    name CDATA #IMPLIED
+    loc CDATA #IMPLIED
+    >
+<!ATTLIST class
+    id CDATA #IMPLIED
+    name CDATA #IMPLIED
+    loc CDATA #IMPLIED
+    >
+<!ATTLIST teacher
+    id CDATA #IMPLIED
+    name CDATA #IMPLIED
+    >
+<!ATTLIST student
+    id CDATA #IMPLIED
+    name CDATA #IMPLIED
+    >

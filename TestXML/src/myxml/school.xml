@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE school SYSTEM "schoolDTD.dtd"> <!-- 外部引入的方式 -->
+
+<school id="zhixing" name="知行" loc="西安">
+    <class id="1" name="阿里班" loc="杭州" >
+        <teacher id="1" name="马云">
+            <subject>英语</subject>
+        </teacher>
+        <student id="1" name="赵一">
+            <sex>女</sex>
+        </student>
+        <student id="2" name="钱二">
+            <sex>男</sex>
+        </student>
+    </class>
+    <class id="2" name="腾讯班" loc="深圳">
+        <teacher id="2" name="马化腾">
+            <subject>计算机基础</subject>
+        </teacher>
+        <student id="3" name="孙三">
+            <sex>男</sex>
+        </student>
+        <student id="4" name="李四">
+            <sex>女</sex>
+        </student>
+    </class>
+</school>

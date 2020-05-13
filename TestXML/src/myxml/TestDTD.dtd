@@ -1,7 +1,0 @@
-<!ELEMENT school (class)>
-<!ELEMENT class (teacher*,student*)>
-<!ELEMENT teacher (name,subject)>
-<!ELEMENT student (name,sex)>
-<!ELEMENT name (#PCDATA)>
-<!ELEMENT subject (#PCDATA)>
-<!ELEMENT sex (#PCDATA)>
