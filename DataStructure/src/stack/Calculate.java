@@ -2,22 +2,48 @@ package stack;
 
 public class Calculate {
     public static void main(String[] args) {
-        String ex = "3+2*6-2";
+        String ex = "7*2*2-5+9/3-4";
         int index = 0;//用于遍历表达式
         ArrayStack2 numStack = new ArrayStack2(20);
         ArrayStack2 operStack = new ArrayStack2(20);
 
+        int num1 = 0;
+        int num2 = 0;
         char cur = ' ';
-        while(true){
-            cur = ex.charAt(index);
+        char oper = ' ';
+        while(index != ex.length()){
+            cur = ex.charAt(index++);
             if(isOper(cur)){
-                if(priority(cur) <= priority((char)operStack.peek())){
-
+                if(operStack.isEmpty()){
+                    operStack.push(cur);
+                }else if (priority(cur) <= priority((char)operStack.peek())){
+                    //从数栈取出两个值 并且从操作符栈去除一个操作符做计算 结果入数栈
+                    num1 = numStack.pop();
+                    num2 = numStack.pop();
+                    oper = (char)operStack.pop();
+                    int res = cal(num2,num1,oper);//在原表达式中num2应当在num1的左边 所以此处先传num2
+                    numStack.push(res);
+                    //计算完毕 当前操作符入符号栈
+                    operStack.push(cur);
                 }else{
-
+                    //当前操作符优先级高 直接入操作符栈
+                    operStack.push(cur);
                 }
+            }else{
+                //cur是字符 按照ascii码转换成对应数字应该减去48
+                numStack.push(cur-48);
             }
         }
+        while(!operStack.isEmpty()){
+            //只要运算符栈不为空 就一直计算
+            num1 = numStack.pop();
+            num2 = numStack.pop();
+            oper = (char)operStack.pop();
+            int res = cal(num2,num1,oper);//在原表达式中num2应当在num1的左边 所以此处先传num2
+            numStack.push(res);
+        }
+        //上面循环结束之后 符号栈空了 数栈只剩下一个数 这个数就是表达式的结果
+        System.out.println("表达式的结果为："+numStack.peek());
     }
 
     //返回运算符优先级的方法
@@ -33,6 +59,23 @@ public class Calculate {
     //判断字符是否是一个操作符
     public static boolean isOper(char value){
         return value == '*' || value == '/' || value == '+' || value == '-';
+    }
+
+    //四则运算方法
+    public static int cal(int num1,int num2,char oper){
+        int res = 0;
+        if(oper == '*'){
+            res = num1 * num2;
+        }else if(oper == '/'){
+            res = num1 / num2;
+        }else if(oper == '+'){
+            res = num1 + num2;
+        }else if(oper == '-'){
+            res = num1 - num2;
+        }else{
+            throw new RuntimeException("暂不支持该运算符");
+        }
+        return res;
     }
 }
 
