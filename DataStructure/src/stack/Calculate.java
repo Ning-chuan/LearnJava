@@ -7,16 +7,17 @@ public class Calculate {
         ArrayStack2 numStack = new ArrayStack2(20);
         ArrayStack2 operStack = new ArrayStack2(20);
 
-        int num1 = 0;
-        int num2 = 0;
-        char cur = ' ';
-        char oper = ' ';
+        int num1 = 0;//计算时，接收数栈中的数
+        int num2 = 0;//计算时，接收数栈中的数
+        char cur = ' ';//记录当前字符
+        char oper = ' ';//计算时，接收符号栈中的符号
         while(index != ex.length()){
             cur = ex.charAt(index++);
             if(isOper(cur)){
                 if(operStack.isEmpty()){
                     operStack.push(cur);
                 }else if (priority(cur) <= priority((char)operStack.peek())){
+                    //此时 当前符号优先级 小于/等于 上一个符号的优先级
                     //从数栈取出两个值 并且从操作符栈去除一个操作符做计算 结果入数栈
                     num1 = numStack.pop();
                     num2 = numStack.pop();
@@ -30,7 +31,7 @@ public class Calculate {
                     operStack.push(cur);
                 }
             }else{
-                //cur是字符 按照ascii码转换成对应数字应该减去48
+                //cur是数字 按照ascii码转换成对应数字应该减去48
                 numStack.push(cur-48);
             }
         }
@@ -47,7 +48,7 @@ public class Calculate {
     }
 
     //返回运算符优先级的方法
-    public static int priority(char oper){
+    private static int priority(char oper){
         if(oper == '*' || oper == '/'){
             return 1;
         }else if (oper == '+' || oper == '-'){
@@ -57,12 +58,12 @@ public class Calculate {
     }
 
     //判断字符是否是一个操作符
-    public static boolean isOper(char value){
+    private static boolean isOper(char value){
         return value == '*' || value == '/' || value == '+' || value == '-';
     }
 
     //四则运算方法
-    public static int cal(int num1,int num2,char oper){
+    private static int cal(int num1,int num2,char oper){
         int res = 0;
         if(oper == '*'){
             res = num1 * num2;
