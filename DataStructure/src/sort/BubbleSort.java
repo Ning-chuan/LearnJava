@@ -17,14 +17,22 @@ public class BubbleSort {
             arr[i] = (int)(Math.random()*8000000);
         }
 
-        Date date1 = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
-        System.out.println("排序前的时间为：" + simpleDateFormat.format(date1));
 
+        long time1 = System.currentTimeMillis();
         bubbleSort(arr);
+        long time2 = System.currentTimeMillis();
 
-        Date date2 = new Date();
-        System.out.println("排序后的时间为："+simpleDateFormat.format(date2));
+        System.out.println(time2-time1);//10805
+
+
+//        Date date1 = new Date();
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+//        System.out.println("排序前的时间为：" + simpleDateFormat.format(date1));
+//
+//        bubbleSort(arr);
+//
+//        Date date2 = new Date();
+//        System.out.println("排序后的时间为："+simpleDateFormat.format(date2));
 
     }
 
