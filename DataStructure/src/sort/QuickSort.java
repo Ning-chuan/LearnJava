@@ -8,7 +8,7 @@ public class QuickSort {
 //        quickSort(arr,0,arr.length-1);
 //        System.out.println(Arrays.toString(arr));
 
-        int[] arr = new int[800000];
+        int[] arr = new int[8000000];
         for(int i = 0;i < arr.length;i++){
             arr[i] = (int)(Math.random()*8000000);
         }
@@ -17,7 +17,7 @@ public class QuickSort {
         quickSort(arr,0,arr.length-1);
         long time2 = System.currentTimeMillis();
 
-        System.out.println(time2-time1);//141
+        System.out.println(time2-time1);//八十万141毫秒  八百万数据1297毫秒
     }
 
     //快速排序思路：
