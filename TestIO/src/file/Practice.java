@@ -5,6 +5,8 @@ import java.io.IOException;
 
 public class Practice {
     public static void main(String[] args) {
+        File file = new File("C:\\Users\\Administrator\\Desktop//copy西部世界04.mp4");
+        System.out.println(file.delete());
 //        File file = new File("E://TestIO//A");
 //        System.out.println(file.length());
 
@@ -26,9 +28,9 @@ public class Practice {
 //        File file = new File("E://TestIO//A");
 //        delete(file);
 
-        File file = new File("D://Test");
-        long size = countFileSize(file);
-        System.out.println("文件大小为："+(size/1024/1024)+"M");
+//        File file = new File("D://Test");
+//        long size = countFileSize(file);
+//        System.out.println("文件大小为："+(size/1024/1024)+"M");
 //        showFileName(file);
 
     }
