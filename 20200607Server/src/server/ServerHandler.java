@@ -36,13 +36,25 @@ public class ServerHandler implements Runnable {
 
                 System.out.println(user.getId() + "说：" + mess);//测试用
 
+                String[] values = mess.split("@");
+
                 //转发
                 Iterator<Map.Entry<String, User>> it = users.iterator();
                 while (it.hasNext()) {
                     Map.Entry<String, User> u = it.next();
-                    PrintWriter pw = new PrintWriter(u.getValue().getSocket().getOutputStream());
-                    pw.println(user.getId() + ":" + mess);
-                    pw.flush();
+                    if (values.length == 1) {//群聊
+                        PrintWriter pw = new PrintWriter(u.getValue().getSocket().getOutputStream());
+                        pw.println(user.getId() + ":" + mess);
+                        pw.flush();
+                    }else{//单聊
+                        for (int i = 1; i < values.length; i++) {
+                            if (values[i].equals(u.getValue().getId())){
+                                PrintWriter pw = new PrintWriter(u.getValue().getSocket().getOutputStream());
+                                pw.println(user.getId() + ":" + values[0]);
+                                pw.flush();
+                            }
+                        }
+                    }
                 }
             }
         } catch (IOException e) {
