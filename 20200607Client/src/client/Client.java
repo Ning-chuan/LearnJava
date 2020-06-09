@@ -14,12 +14,12 @@ public class Client {
             pw.println("百晓生");
             pw.flush();
 
-            //创建读、写线程
-            Thread reader = new Thread(new ClientReader(socket));
-            Thread writer = new Thread(new ClientWriter(socket));
-            //开启读、写线程
-            reader.start();
-            writer.start();
+//            //创建读、写线程
+//            Thread reader = new Thread(new ClientReader(socket));
+//            Thread writer = new Thread(new ClientWriter(socket));
+//            //开启读、写线程
+//            reader.start();
+//            writer.start();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
