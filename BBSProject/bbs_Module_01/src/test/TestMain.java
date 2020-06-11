@@ -1,17 +1,98 @@
 package test;
 
-import domain.Student;
-import newdao.StudentDao;
-import orm.SqlSession;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class TestMain {
 
+    public static Date randomDate(String startDate, String endDate){
+        SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+        try {
+            Date start = format.parse(startDate);
+            Date end = format.parse(endDate);
+            long newTime = start.getTime() + (long)(Math.random()*(end.getTime() - start.getTime()));
+            return new Date(newTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
+
+//        Date randomDate = randomDate("2018-1-1","2020-7-7");
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//        String result = format.format(randomDate);
+//        System.out.println(result);
+
+        /* 批量新增数据：
+        String driver = "com.mysql.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/bbs?useSSL=false&characterEncoding=UTF-8";
+        String username = "root";
+        String password = "root";
+        String sql = "INSERT INTO T_POST(TITLE,CONTENT,DATE,STATUS,BOARDID) VALUES(CONCAT('.NET技术贴',?),'内容：.net技术测试贴',?,?,7);";
+
+        Connection conn = null;
+        PreparedStatement pstat = null;
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, username, password);
+            pstat = conn.prepareStatement(sql);
+            //利用for循环插入10条数据
+            for (int i = 0; i < 5; i++) {
+                //设置标题序号
+                pstat.setInt(1,i+1);
+                //设置随机日期
+                pstat.setDate(2,new java.sql.Date(randomDate("2020-1-1","2020-7-7").getTime()));
+                //设置状态
+                if(i < 1){
+                    pstat.setString(3,"置顶");
+                }else if(i < 3){
+                    pstat.setString(3,"精华");
+                }else {
+                    pstat.setString(3,"普通");
+                }
+                pstat.executeUpdate();
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                if(pstat != null) {
+                    pstat.close();
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            try {
+                if(conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        */
+
+
+
+
+
+
+        /*
         SqlSession sqlSession = new SqlSession();
         StudentDao dao = sqlSession.getMapper(StudentDao.class);
         Student student = dao.selectOne(1);
         System.out.println(student);
-
+        */
 
         //=============================================
         /*

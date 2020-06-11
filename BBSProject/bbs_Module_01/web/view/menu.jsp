@@ -67,7 +67,7 @@
 				  scrolldelay="10"
 				  direction="left"
 				  width="470">
-				  <img src="images/index/pcard.gif"> 渡一教育在线服务热线：(0451)8491*** E-mail：tsoft***@tsoft.com
+				  <img src="images/index/pcard.gif"> 在线服务热线：(0451)8491*** E-mail：tsoft***@tsoft.com
 		        </marquee>
             </td>
             <td align="center" width="271" background="images/index/messages.jpg">
@@ -80,7 +80,7 @@
             <td colspan="2" background="images/index/indexS.jpg" align="center">
                 <table border="0" width="98%">
                     <tr>
-                        <td width="25%">
+                        <td width="50%">
                         	欢迎登录：
 
                         		游客，您还没有登录！
