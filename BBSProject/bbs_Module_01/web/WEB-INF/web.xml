@@ -3,15 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-    
+
     <servlet>
         <servlet-name>bbsServet</servlet-name>
         <servlet-class>com.servlets.BoardServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>bbsServet</servlet-name>
-<url-pattern>/bbsServet</url-pattern>
-        </servlet-mapping>
-    
-    
+        <url-pattern>/bbsServet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>postServlet</servlet-name>
+        <servlet-class>com.servlets.PostServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>postServlet</servlet-name>
+        <url-pattern>/postServlet</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

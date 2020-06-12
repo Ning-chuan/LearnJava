@@ -26,7 +26,7 @@
 
                                         <tr height="35">
                                             <td align="center" width="60" rowspan="2"><img src="images/index/boardPic.jpg"></td>
-                                            <td><img src="images/index/btitle.jpg"> <a href="postServlet?boardId=${childBoard.id}" style="" alt="进入版面！">${childBoard.boardName}</a></td>
+                                            <td><img src="images/index/btitle.jpg"> <a href="postServlet?boardId=${childBoard.id}&pageNo=1" style="" alt="进入版面！">${childBoard.boardName}</a></td>
                                             <td rowspan="2" width="20%" align="center">
                                                 <table border="0" width="90%" cellspacing="3" cellpadding="0">
                                                     <tr><td>帖子总数：<b><font color="blue"></font></b></td></tr>
