@@ -1,10 +1,12 @@
 package hashtable;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class MyHashTableTest {
     public static void main(String[] args) {
 
+        HashMap
         MyHashTable myHashTable = new MyHashTable(6);
         Scanner input = new Scanner(System.in);
         String key = "";
