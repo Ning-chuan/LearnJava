@@ -2,6 +2,7 @@ package test;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
 /**
@@ -25,12 +26,39 @@ class MyCallableThread implements Callable {
 }
 public class CallableThreadDemo {
     public static void main(String[] args) {
+        /*
+        //例1：
         MyCallableThread m1 = new MyCallableThread();
         FutureTask futureTask = new FutureTask(m1);
         new Thread(futureTask).start();
 
         try {
             System.out.println(futureTask.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+         */
+
+        //例2：
+        //用FutureTask对象包装Callable对象call()方法的返回值
+        FutureTask<Integer> task = new FutureTask<>((Callable<Integer>) () -> {
+            int i = 0;
+            for (; i < 100; i++) {
+                System.out.println(Thread.currentThread().getName() + ":i=" + i);
+            }
+            return i;
+        });
+
+        for (int i = 0; i < 100; i++) {
+            System.out.println(Thread.currentThread().getName()+":i="+i);
+            if(i == 20){
+                new Thread(task,"有返回值的线程").start();
+            }
+        }
+        try {
+            System.out.println("子线程的返回值："+task.get());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
