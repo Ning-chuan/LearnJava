@@ -10,15 +10,19 @@ public class BinarySortTreeDemo {
         System.out.println("删除节点前，二叉树为：");
         binarySortTree.inOrder();
 
-        binarySortTree.delNode(2);
-        binarySortTree.delNode(9);
-        binarySortTree.delNode(12);
         binarySortTree.delNode(5);
-        binarySortTree.delNode(10);
-        binarySortTree.delNode(90);
+        binarySortTree.delNode(7);
+        binarySortTree.delNode(2);
+        binarySortTree.delNode(12);
+        binarySortTree.delNode(190);
+        binarySortTree.delNode(9);
+
+//        binarySortTree.delNode(10);
 
         System.out.println("删除节点后，二叉树为：");
         binarySortTree.inOrder();
+        System.out.println("二叉树根节点为："+binarySortTree.getRoot());
+
     }
 
 }
@@ -99,27 +103,28 @@ class BinarySortTree{
                 root = null;
             }
         } else if (target.left != null && target.right != null) {
-            //情况二：要删除的节点右两个子树 找到该节点左子树值最大的节点 覆盖目标节点
-            if(parent != null){
-                findLeftMaxNode(target);
-            }else{
-                //要删除的节点是根节点
-
-            }
+            //情况二：要删除的节点右两个子树
+            //  找到目标节点左子树值最大的节点
+            Node maxLeftChildNode = this.findLeftMaxNode(target);
+            System.out.println("最大左子节点："+maxLeftChildNode);
+            //  删除左子树最大节点
+            delNode(maxLeftChildNode.value);
+            //  用左子树最大节点的值覆盖目标节点
+            target.value = maxLeftChildNode.value;
         } else {
             //情况三：要删除的节点只有一个子树
             if(parent != null){
-                if(parent.left != null){
-                    //目标节点是父节点的左子树
-                    if(target.left != null){
+                if(target.left != null){
+                    //目标节点只有左子树
+                    if(parent.left == target){
                         parent.left = target.left;
                     }else{
-                        parent.left = target.right;
+                        parent.right = target.left;
                     }
                 }else{
-                    //目标节点是父节点的右子树
-                    if(target.left != null){
-                        parent.right = target.left;
+                    //目标节点只有右子树
+                    if(parent.left == target){
+                        parent.left = target.right;
                     }else{
                         parent.right = target.right;
                     }
@@ -136,8 +141,16 @@ class BinarySortTree{
     }
 
     //找到左子树值最大的节点
-    private void findLeftMaxNode(Node target) {
-
+    private Node findLeftMaxNode(Node target) {
+        if(target.left == null){
+            return null;
+        }
+        Node temp = target.left;
+        while(temp.right != null){
+            temp = temp.right;
+        }
+        //循环结束 temp指向了左子树最大的节点
+        return temp;
     }
 
     //方法：根据value找到目标节点
