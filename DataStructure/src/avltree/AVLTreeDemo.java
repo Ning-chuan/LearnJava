@@ -2,20 +2,25 @@ package tree.avltree;
 
 public class AVLTreeDemo {
     public static void main(String[] args) {
-        int[] arr = {4, 3, 6, 5, 7, 8};
+        //int[] arr = {4, 3, 6, 5, 7, 8};
+        int[] arr = {10,11,7,6,8,9};
         AVLTree tree = new AVLTree();
         for (int value : arr) {
             tree.addNode(new Node(value));
         }
 
+        System.out.println("中序遍历：");
         tree.inOrder();
-        System.out.println("AVL树根节点为：" + tree.getRoot());
+        System.out.println("AVL树根节点为：" + tree.getRoot());//8
 
-        System.out.println("当前树的高度为：" + tree.getHeight());
+        System.out.println("当前树的高度为：" + tree.getHeight());//3
+        System.out.println("左子树的高度为：" + tree.getRoot().leftHeight());//2
+        System.out.println("右子树的高度为：" + tree.getRoot().rightHeight());//2
+
     }
 }
 
-//以二叉排序为基础的二叉平衡树类
+//以二叉排序树为基础的二叉平衡树类
 class AVLTree {
 
     Node root;
@@ -38,6 +43,23 @@ class AVLTree {
             root = node;
         } else {
             addNode(root, node);
+            //当添加完一个结点后，如果:(右子树的高度-左子树的高度)>1,左旋转
+            if ((root.rightHeight() - root.leftHeight()) > 1) {
+                //如果它的右子树的左子树的高度大于它的右子树的右子树的高度
+                if (root.right != null && root.right.leftHeight() > root.right.rightHeight()) {
+                    //先对根节点的右子树右旋
+                    root.right.rightRotate();
+                }
+                //左旋
+                root.leftRotate();
+            }
+            //逻辑与上面正好对应
+            if ((root.leftHeight() - root.rightHeight()) > 1) {
+                if(root.left != null && root.left.rightHeight() > root.left.leftHeight()){
+                    root.left.leftRotate();
+                }
+                root.rightRotate();
+            }
         }
     }
 
@@ -236,7 +258,56 @@ class Node {
     }
 
     //方法：返回以当前节点为根节点的树的高度
-    public int height(){
+    public int height() {
         return Math.max(left == null ? 0 : left.height(), right == null ? 0 : right.height()) + 1;
     }
+    //方法：求当前节点左子树高度
+    public int leftHeight(){
+        if(left == null){
+            return 0;
+        }
+        return left.height();
+    }
+    //方法：求当前节点右子树高度
+    public int rightHeight(){
+        if(right == null){
+            return 0;
+        }
+        return right.height();
+    }
+
+    //方法：左旋
+    public void leftRotate() {
+        if (this.right == null) {
+            System.out.println("没有右子节点，不能左旋");
+            return;
+        }
+        //1.以当前节点的值创建一个新节点
+        Node newNode = new Node(this.value);
+        //2.新节点的左子节点 指向 当前节点的左子节点
+        newNode.left = this.left;
+        //3.新节点的右子节点 指向 当前节点右子节点的左子节点
+        newNode.right = this.right.left;
+        //4.把当前节点右子节点的值赋给当前节点（让右子节点覆盖当前节点）
+        this.value = this.right.value;
+        //5.当前节点指向其右子节点的右子节点
+        this.right = this.right.right;
+        //6.当前节点左子节点指向新节点
+        this.left = newNode;
+    }
+
+    //方法：右旋  步骤对比左旋
+    public void rightRotate() {
+        if (this.left == null) {
+            System.out.println("没有左子节点，无法右旋");
+            return;
+        }
+        Node newNode = new Node(this.value);
+        newNode.right = this.right;
+        newNode.left = this.left.right;
+        this.value = this.left.value;
+        this.right = newNode;
+        this.left = this.left.left;
+    }
+
 }
