@@ -15,6 +15,7 @@
         <aop:aspect ref="aspect1">
             <aop:pointcut id="test" expression="execution(* controller.TestController.test())"/>
             <aop:before method="before" pointcut-ref="test"></aop:before>
+            <aop:after method="after" pointcut-ref="test"/>
         </aop:aspect>
     </aop:config>
 
