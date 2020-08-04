@@ -1,7 +1,8 @@
 package com.ziyan.pc;
 
 /**
- * synchronized版生 产者和消费者问题
+ *
+ *   synchronized版 生产者和消费者问题
  */
 public class ProducerAndConsumer01 {
     public static void main(String[] args) {
