@@ -43,7 +43,7 @@ class Data{
 
     //增加方法：
     public synchronized void increment() throws InterruptedException {
-        //用if会产生‘虚假唤醒’问题，应该用while
+        //用if会产生’虚假唤醒‘问题，应该用while
         while(num > 0){
             //num不为零就等待，直到num==0时才增加num
             wait();
