@@ -19,6 +19,7 @@ class Test{
             Constructor<EnumSingle> constructor = EnumSingle.class.getDeclaredConstructor(String.class,int.class);
             constructor.setAccessible(true);
 
+
             //NoSuchMethodException: com.ziyan.single.EnumSingle.<init>()
             //IllegalArgumentException: Cannot reflectively create enum objects
             EnumSingle enumSingle = constructor.newInstance();
