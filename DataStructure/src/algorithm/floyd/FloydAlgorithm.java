@@ -7,5 +7,10 @@ public class FloydAlgorithm {
 }
 
 class Graph{
-    
+    private int length;
+    private char[] vertex;
+    private int[][] dis;
+    private int[][] pre;
+
+
 }
