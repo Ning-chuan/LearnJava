@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TestDate {
+public class TestDateTime {
     /**
      * 测试：java.util.Date和java.sql.Date类
      */
