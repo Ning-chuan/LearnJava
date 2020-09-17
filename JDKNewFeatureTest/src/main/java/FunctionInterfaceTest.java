@@ -33,7 +33,7 @@ public class FunctionInterfaceTest {
     }
 
     /**
-     * 用于测试：供给型接口Supplier<T>  不需要参数，返回T
+     * 用于测试：供给型接口 Supplier<T>  不需要参数，返回T
      */
     @Test
     public void testSupplier(){
@@ -58,7 +58,7 @@ public class FunctionInterfaceTest {
     }
 
     /**
-     * 用于测试：断定型接口Predicate<T> 需要一个参数T 返回一个布尔值
+     * 用于测试：断定型接口 Predicate<T> 需要一个参数T 返回一个布尔值
      */
     @Test
     public void testPredicate(){
