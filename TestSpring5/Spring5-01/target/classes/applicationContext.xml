@@ -1,8 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="person" class="com.yuziyan.Person"></bean>
+    <bean class="com.yuziyan.basic.Person"></bean>
+
+    <bean id="person" class="com.yuziyan.basic.Person"/>
+
+    <bean id="person1" name="p" class="com.yuziyan.basic.Person">
+        <property name="name">
+            <value>张无忌</value>
+        </property>
+        <property name="age">
+            <value>200</value>
+        </property>
+
+        <property name="emails">
+            <list>
+                <value>1234@qq.com</value>
+                <value>yangGuo@qq.com</value>
+                <value>baiXiaoSheng@qq.com</value>
+                <value>Trump@qq.com</value>
+            </list>
+        </property>
+
+        <property name="tels">
+            <set>
+                <value>131********</value>
+                <value>159********</value>
+                <value>176********</value>
+            </set>
+        </property>
+
+        <property name="address">
+            <list>
+                <value>花果山水帘洞</value>
+                <value>铁岭</value>
+                <value>东土大唐</value>
+            </list>
+        </property>
+
+        <property name="qqs">
+            <map>
+                <entry>
+                    <key><value>周芷若</value></key>
+                    <value>备胎</value>
+                </entry>
+                <entry>
+                    <key><value>赵敏</value></key>
+                    <value>爱人</value>
+                </entry>
+            </map>
+        </property>
+
+        <property name="p">
+            <props>
+                <prop key="孙悟空">紫霞仙子</prop>
+                <prop key="唐僧">白骨精</prop>
+                <prop key="om">Jerry</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="person2" class="com.yuziyan.basic.Person">
+        <property name="name" value="韩信"/>
+    </bean>
+
+    <bean id="person3" class="com.yuziyan.basic.Person" p:name="沙和尚"/>
+
+    <bean id="userDao" class="com.yuziyan.basic.UserDaoImpl"/>
+    <bean id="userService" class="com.yuziyan.basic.UserServiceImpl">
+        <property name="userDao">
+            <ref bean="userDao"/>
+        </property>
+<!--        <property name="userDao" ref="userDao"/>-->
+    </bean>
+
+    <bean id="userService1" class="com.yuziyan.basic.UserServiceImpl" p:userDao-ref="userDao"/>
+
+    <bean id="customer" class="com.yuziyan.basic.constructor.Customer">
+        <constructor-arg>
+            <value>武松</value>
+        </constructor-arg>
+        <constructor-arg>
+            <value>234</value>
+        </constructor-arg>
+    </bean>
 
 </beans>
