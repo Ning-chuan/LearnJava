@@ -3,6 +3,8 @@ import com.yuziyan.basic.constructor.Customer;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.sql.Connection;
+
 public class TestSpring {
     /**
      * 用于测试：Spring的第一个程序
@@ -87,6 +89,41 @@ public class TestSpring {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
         Customer customer = (Customer) ctx.getBean("customer");
         System.out.println("customer = " + customer);
+    }
+    
+    /**
+     * 用于测试：FactoryBean创建复杂对象
+     */
+    @Test
+    public void test5(){
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
+        Object conn = ctx.getBean("conn");
+        System.out.println("conn = " + conn);
+    }
+    
+    /**
+     * 用于测试：实例工厂和静态工厂创建复杂对象
+     */
+    @Test
+    public void test6(){
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext1.xml");
+        Object connectionFactory = ctx.getBean("connectionFactory");
+        System.out.println("connectionFactory = " + connectionFactory);
+        Object conn = ctx.getBean("conn");
+        System.out.println("conn = " + conn);
+
+        Object conn1 = ctx.getBean("conn1");
+        System.out.println("conn1 = " + conn1);
+    }
+
+    /**
+     * 用于测试：自定义类型转换器 String-->Date
+     */
+    @Test
+    public void test7(){
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext1.xml");
+        com.yuziyan.converter.Person person = (com.yuziyan.converter.Person) ctx.getBean("person");
+        System.out.println("birth = "+person.getBirth());
     }
     
 }

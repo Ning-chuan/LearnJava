@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="connectionFactory" class="com.yuziyan.factorybean.ConnectionFactory"/>
+
+    <bean id="conn" factory-bean="connectionFactory" factory-method="getConnection"/>
+
+    <bean id="conn1" class="com.yuziyan.factorybean.StaticConnectionFactory" factory-method="getConnection"/>
+
+    <!--创建自定义类型转换器对象-->
+    <bean id="myDateConverter" class="com.yuziyan.converter.MyDateConverter">
+        <property name="pattern" value="yyyy-MM-dd"/>
+    </bean>
+    <!--在Spring中注册自定义的转换器-->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <ref bean="myDateConverter"/>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="person" class="com.yuziyan.converter.Person">
+        <property name="name" value="张三丰"/>
+        <property name="birth" value="2020-09-09"/>
+    </bean>
+
+
+</beans>
