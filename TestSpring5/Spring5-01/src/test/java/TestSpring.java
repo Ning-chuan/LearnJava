@@ -125,5 +125,14 @@ public class TestSpring {
         com.yuziyan.converter.Person person = (com.yuziyan.converter.Person) ctx.getBean("person");
         System.out.println("birth = "+person.getBirth());
     }
-    
+
+    /**
+     * 用于测试：后置处理器
+     */
+    @Test
+    public void test8(){
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext2.xml");
+        Object category = ctx.getBean("category");
+        System.out.println(category);
+    }
 }

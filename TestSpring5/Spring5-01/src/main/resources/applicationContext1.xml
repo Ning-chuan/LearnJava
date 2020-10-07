@@ -27,5 +27,4 @@
         <property name="birth" value="2020-09-09"/>
     </bean>
 
-
 </beans>

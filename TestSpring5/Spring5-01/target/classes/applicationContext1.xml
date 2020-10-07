@@ -9,7 +9,7 @@
 
     <bean id="conn1" class="com.yuziyan.factorybean.StaticConnectionFactory" factory-method="getConnection"/>
 
-    <!--创建自定义转换器对象-->
+    <!--创建自定义类型转换器对象-->
     <bean id="myDateConverter" class="com.yuziyan.converter.MyDateConverter">
         <property name="pattern" value="yyyy-MM-dd"/>
     </bean>
@@ -26,6 +26,5 @@
         <property name="name" value="张三丰"/>
         <property name="birth" value="2020-09-09"/>
     </bean>
-
 
 </beans>
