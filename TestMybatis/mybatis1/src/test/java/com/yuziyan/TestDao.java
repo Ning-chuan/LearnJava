@@ -1,6 +1,6 @@
 package com.yuziyan;
 
-import com.yuziyan.dao.UserDao;
+import com.yuziyan.dao.UserMapper;
 import com.yuziyan.pojo.User;
 import com.yuziyan.utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -14,8 +14,8 @@ public class TestDao {
     @Test
     public void test1(){
         SqlSession sqlSession = MybatisUtils.getSqlSession();
-        UserDao userDao = sqlSession.getMapper(UserDao.class);
-        User user = userDao.getUserById(1);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = userMapper.getUserById(1);
         System.out.println("user = " + user);
     }
 }

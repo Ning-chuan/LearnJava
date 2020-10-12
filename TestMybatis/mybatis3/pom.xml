@@ -9,7 +9,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mybatis1</artifactId>
+    <groupId>com.com.yuziyan</groupId>
+    <artifactId>mybatis3</artifactId>
+
+    <dependencies>
+        <!--引入lombok插件-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency>
+    </dependencies>
+
 
 
 </project>

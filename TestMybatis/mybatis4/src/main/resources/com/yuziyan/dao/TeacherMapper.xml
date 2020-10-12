@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuziyan.dao.TeacherDao">
+
+    <!--====================================================================-->
+    <!--结果嵌套 处理一对多关系-->
+    <select id="getTeacherById" resultMap="teacherMap">
+        select t.id id,t.name name,s.id sid,s.name sname from teacher t,student s where t.id=s.tid and t.id=#{id}
+    </select>
+
+    <resultMap id="teacherMap" type="teacher">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <collection property="studentList" ofType="student">
+            <result column="sid" property="id"/>
+            <result column="sname" property="name"/>
+            <result column="id" property="tid"/>
+        </collection>
+    </resultMap>
+
+
+    <!--========================================================================-->
+
+    <!--查询嵌套 处理一对多关系-->
+    <select id="getTeacherById1" resultMap="teacherMap1">
+        select * from teacher where id = #{id}
+    </select>
+
+    <resultMap id="teacherMap1" type="teacher">
+        <id column="id" property="id"/>
+        <collection property="studentList" column="id" ofType="student" select="getStudentByTeacherId"/>
+    </resultMap>
+
+    <select id="getStudentByTeacherId" resultType="student">
+        select * from student where tid = #{id}
+    </select>
+    <!--========================================================================-->
+
+</mapper>

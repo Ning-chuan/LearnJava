@@ -17,6 +17,7 @@
 
 
     <mappers>
-        <mapper resource="mapper/userMapper.xml"/>
+<!--        <mapper resource="mapper/UserMapper.xml"/>-->
+        <mapper class="com.com.com.yuziyan.dao.UserMapper"/>
     </mappers>
 </configuration>
