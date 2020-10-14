@@ -8,11 +8,11 @@ public class TestSpring {
      */
     @Test
     public void test1(){
-//        XmlWebApplicationContext ctx = new XmlWebApplicationContext();
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext();
-        String[] names = ctx.getBeanDefinitionNames();
-        for (String name : names) {
-            System.out.println("name = " + name);
-        }
+////        XmlWebApplicationContext ctx = new XmlWebApplicationContext();
+//        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext();
+//        String[] names = ctx.getBeanDefinitionNames();
+//        for (String name : names) {
+//            System.out.println("name = " + name);
+//        }
     }
 }

@@ -17,10 +17,7 @@
 
 
     <!-- servlet-mapping 映射的路径:"/" -->
-    <!-- 静态资源配置
-        1.加入对静态资源的处理:js,gif,png
-        2.允许使用"/"做整体映射
-    -->
+    <!-- 让springMVC不处理静态资源 .css .js .html .mp等等 -->
     <mvc:default-servlet-handler/>
 
     <!-- 配置jsp 显示ViewResolver -->
@@ -31,6 +28,6 @@
     </bean>
 
     <!-- 扫描bean -->
-    <context:component-scan base-package="seckill"/>
+    <context:component-scan base-package="com.yuziyan.seckill"/>
 
 </beans>
