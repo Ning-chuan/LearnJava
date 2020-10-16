@@ -1,3 +1,5 @@
+import cn.hutool.crypto.digest.DigestUtil;
+import com.yuziyan.seckill.dao.UserDao;
 import com.yuziyan.seckill.entity.User;
 import com.yuziyan.seckill.service.UserService;
 import com.yuziyan.seckill.service.impl.UserServiceImpl;
@@ -15,6 +17,9 @@ public class TestSpring {
     
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserDao userDao;
     
     /**
      * 用于测试：spring-test使用
@@ -25,4 +30,25 @@ public class TestSpring {
         System.out.println("user = " + user);
     }
     
+    /**
+     * 用于测试：userDao.getUserByNameAndPassword()方法
+     */
+    @Test
+    public void test1(){
+        User user = userDao.getUserByNameAndPassword("张三", "333");
+        System.out.println("user = " + user);
+    }
+
+    /**
+     * 用于测试：userDao.addUser()方法
+     */
+    @Test
+    public void test3(){
+        User user = new User();
+        user.setName("于自言");
+        user.setPassword(DigestUtil.md5Hex("123456"));
+        user.setPhone("13112341234");
+        int i = userDao.addUser(user);
+        System.out.println("i = " + i);
+    }
 }

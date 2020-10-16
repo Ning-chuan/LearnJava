@@ -53,4 +53,15 @@ public class SeckillOrder {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    @Override
+    public String toString() {
+        return "SeckillOrder{" +
+                "id=" + id +
+                ", seckillItemId=" + seckillItemId +
+                ", userId=" + userId +
+                ", state=" + state +
+                ", createTime=" + createTime +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package com.yuziyan.seckill.service.impl;
 
+import cn.hutool.crypto.digest.DigestUtil;
 import com.yuziyan.seckill.dao.UserDao;
 import com.yuziyan.seckill.entity.User;
 import com.yuziyan.seckill.service.UserService;
@@ -14,6 +15,15 @@ public class UserServiceImpl implements UserService {
 
     public User getUser(int id) {
         return userDao.getUser(id);
+    }
+
+    @Override
+    public Boolean login(User user) {
+        User res = userDao.getUserByNameAndPassword(user.getName(), DigestUtil.md5Hex(user.getPassword()));
+        if(res != null){
+            return true;
+        }
+        return false;
     }
 
 }

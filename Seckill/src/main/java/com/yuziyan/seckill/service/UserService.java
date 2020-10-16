@@ -5,4 +5,6 @@ import com.yuziyan.seckill.entity.User;
 public interface UserService {
 
     User getUser(int id);
+
+    Boolean login(User user);
 }
