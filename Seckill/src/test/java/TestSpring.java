@@ -1,6 +1,8 @@
 import cn.hutool.crypto.digest.DigestUtil;
 import com.yuziyan.seckill.dao.UserDao;
+import com.yuziyan.seckill.entity.SeckillItem;
 import com.yuziyan.seckill.entity.User;
+import com.yuziyan.seckill.service.SeckillItemService;
 import com.yuziyan.seckill.service.UserService;
 import com.yuziyan.seckill.service.impl.UserServiceImpl;
 import org.junit.Test;
@@ -11,12 +13,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-*.xml"})
 public class TestSpring {
     
     @Autowired
     UserService userService;
+    
+    @Autowired
+    SeckillItemService seckillItemService;
 
     @Autowired
     UserDao userDao;
@@ -50,5 +57,17 @@ public class TestSpring {
         user.setPhone("13112341234");
         int i = userDao.addUser(user);
         System.out.println("i = " + i);
+    }
+    
+    
+    /**
+     * 用于测试：seckillItemService.getSeckillItemList()方法
+     */
+    @Test
+    public void test4(){
+        List<SeckillItem> seckillItemList = seckillItemService.getSeckillItemList();
+        for (SeckillItem seckillItem : seckillItemList) {
+            System.out.println("seckillItem = " + seckillItem);
+        }
     }
 }
