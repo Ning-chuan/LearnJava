@@ -70,4 +70,13 @@ public class TestSpring {
             System.out.println("seckillItem = " + seckillItem);
         }
     }
+
+    /**
+     * 用于测试：seckillItemService.getSeckillItem()方法
+     */
+    @Test
+    public void test5(){
+        SeckillItem seckillItem = seckillItemService.getSeckillItem(1);
+        System.out.println("seckillItem = " + seckillItem);
+    }
 }

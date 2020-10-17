@@ -18,7 +18,7 @@
 
     <!-- servlet-mapping 映射的路径:"/" -->
     <!-- 让springMVC不处理静态资源 .css .js .html .mp等等 -->
-    <mvc:default-servlet-handler/>
+<!--    <mvc:default-servlet-handler/>-->
 
     <!-- 配置jsp 显示ViewResolver -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -30,9 +30,5 @@
     <!-- 扫描bean -->
     <context:component-scan base-package="com.yuziyan.seckill"/>
 
-    <!-- 设置字符集 -->
-    <!--<bean id="characterEncoding" class="org.springframework.web.filter.CharacterEncodingFilter">
-        <property name="encoding" value="utf-9"
-    </bean>-->
 
 </beans>

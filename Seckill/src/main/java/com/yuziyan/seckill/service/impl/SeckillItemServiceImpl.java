@@ -18,4 +18,9 @@ public class SeckillItemServiceImpl implements SeckillItemService {
     public List<SeckillItem> getSeckillItemList() {
         return seckillItemDao.getAllSeckillItems();
     }
+
+    @Override
+    public SeckillItem getSeckillItem(Integer id) {
+        return seckillItemDao.getSeckillItemById(id);
+    }
 }

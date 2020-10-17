@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SeckillItemDao {
     List<SeckillItem> getAllSeckillItems();
+
+    SeckillItem getSeckillItemById(Integer id);
 }

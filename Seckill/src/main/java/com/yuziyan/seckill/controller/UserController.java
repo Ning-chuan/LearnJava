@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -22,8 +23,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-    @Autowired
-    SeckillItemService seckillItemService;
 
     @RequestMapping(value = "/getUser")
     @ResponseBody
@@ -33,7 +32,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login")
-    public String login(String username, String password, Model model) {
+    public String login(String username, String password, Model model , HttpSession session) {
         //数据校验
         if (username == null || "".equals(username) && password == null || "".equals(password)) {
             throw new UserException("非法登用户，请重新录！");
@@ -43,10 +42,10 @@ public class UserController {
         if (!res) {
             throw new UserException("用户名或密码错误");
         }
-        //用户名密码正确，调用业务层查询商品列表，并返回
-        List<SeckillItem> seckillItemList = seckillItemService.getSeckillItemList();
-        model.addAttribute("seckillItemList", seckillItemList);
-        return "itemList";
+        //把当前用户信息存在session里
+        session.setAttribute("user",new User(username,password));
+        //转发到秒杀商品列表页
+        return "forward:/getSeckillItemList";
     }
 
 

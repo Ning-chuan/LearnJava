@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>秒杀商品列表</title>
+    <%--导入公用内容 Bootstrap jQuery ... --%>
     <%@include file="common/head.jsp" %>
     <style>
         #seckillItemsDiv{
@@ -39,7 +40,7 @@
                     <td>${item.price}</td>
                     <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${item.startTime}"></fmt:formatDate></td>
                     <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${item.endTime}"></fmt:formatDate></td>
-                    <td><a href="/Seckill/detail/${item.id}">进入秒杀</a></td>
+                    <td><a href="/Seckill/itemDetail/${item.id}">进入秒杀</a></td>
                 </tr>
             </c:forEach>
             </tbody>

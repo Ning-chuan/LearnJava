@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface SeckillItemService {
     List<SeckillItem> getSeckillItemList();
+
+    SeckillItem getSeckillItem(Integer id);
 }
