@@ -6,5 +6,5 @@ public interface UserService {
 
     User getUser(int id);
 
-    Boolean login(String username,String password);
+    User login(String username,String password);
 }

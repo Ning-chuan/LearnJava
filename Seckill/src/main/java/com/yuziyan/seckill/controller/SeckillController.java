@@ -2,17 +2,18 @@ package com.yuziyan.seckill.controller;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.yuziyan.seckill.dto.ResponseResult;
+import com.yuziyan.seckill.dto.SeckillUrl;
 import com.yuziyan.seckill.entity.SeckillItem;
+import com.yuziyan.seckill.entity.User;
 import com.yuziyan.seckill.exception.SeckillException;
+import com.yuziyan.seckill.exception.UserException;
 import com.yuziyan.seckill.service.SeckillItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +50,28 @@ public class SeckillController {
     @ResponseBody
     public ResponseResult<Long> getServerTime(){
         return new ResponseResult<>(true,new Date().getTime(),"ok");
+    }
+
+    //获取商品的秒杀url
+    @RequestMapping(value = "/getSeckillUrl/{itemId}",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseResult<SeckillUrl> getSeckillUrl(@PathVariable("itemId") int itemId, HttpSession session){
+        //后端验证：
+        if (ObjectUtil.isEmpty(session.getAttribute("user"))) {
+            throw new UserException("尚未登陆");
+        }
+        ResponseResult<SeckillUrl> result = new ResponseResult<>();
+        try {
+            //获取seckillUrl 设置响应信息
+            SeckillUrl seckillUrl = seckillItemService.getSeckillUrl(itemId);
+            result.setSuccess(true);
+            result.setData(seckillUrl);
+            result.setMessage("ok");
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage(e.getMessage());
+        }
+        return result;
     }
 
 }

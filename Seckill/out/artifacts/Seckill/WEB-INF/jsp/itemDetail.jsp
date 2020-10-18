@@ -64,9 +64,29 @@
             }
 
             function startSeckill() {
-                alert("秒杀开始!");
-                //设置秒杀按钮可用：
-                $("#seckillBtn").removeClass("disabled");
+                //alert("秒杀开始!");
+                //获取秒杀url
+                var itemId = ${seckillItem.id};
+                $.post("/Seckill/getSeckillUrl/"+itemId,{},function (result) {
+                    //获取响应结果中的seckillUrl
+                    var seckillUrl = result['data'];
+                    console.log(result);
+                    if(seckillUrl['enable']){
+                        //此时seckillUrl可用
+                        //调整秒杀按钮样式：
+                        $("#seckillBtn").removeClass("disabled");
+                        $("#seckillBtn").removeClass("btn-default");
+                        $("#seckillBtn").addClass("btn-primary");
+                        //添加一次点击事件
+                        $("#seckillBtn").one('click',function () {
+                            //点击开始抢购按钮之后，开始秒杀
+                            alert("开始秒杀！")
+                        });
+                    }
+                });
+
+
+
             }
 
 
@@ -86,7 +106,8 @@
                 //时间检查:
                 if (serverTime >= endTime) {
                     //过了结束之间,提示一下,然后直接返回
-                    alert("该商品的秒杀已然结束!")
+                    $('#afterText').text("后结束抢购");
+                    alert("该商品的秒杀已然结束!");
                     return;
                 }
 
@@ -143,10 +164,15 @@
     <div id="seckillItemDiv" class="panel panel-danger">
         <!-- Default panel contents -->
         <div class="alert panel-heading">商品名称：${seckillItem.name}</div>
-        <div class="alert alert-info" role="alert">秒杀价格：${seckillItem.price}</div>
+        <div class="alert alert-info" role="alert">秒杀价格：${seckillItem.price} &nbsp;元</div>
         <div class="alert alert-info" role="alert">库存数量：${seckillItem.number}</div>
+        <div class="alert alert-info" role="alert">
+            秒杀开始时间：<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${seckillItem.startTime}"></fmt:formatDate>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            秒杀结束时间：<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${seckillItem.endTime}"></fmt:formatDate>
+        </div>
 
-        <%--        当前场次 00 天 00 时 00 分 00 后结束抢购--%>
+        <%-- 当前场次 00 天 00 时 00 分 00 后结束抢购 --%>
         <div id="seckillBox">
             <div id="timeDiv">
                 <span class="st">当前场次</span>
@@ -160,10 +186,11 @@
                 <span id="sec_sec" class="timeNum">00</span>
 
                 <span id="afterText" class="st">后开始抢购</span>
-
             </div>
         </div>
-        <button id="seckillBtn" class="btn btn-primary disabled">开始抢购</button>
+        <div style="text-align:center">
+            <button id="seckillBtn" class="btn btn-default disabled">开始抢购</button>
+        </div>
 
 
     </div>

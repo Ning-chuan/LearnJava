@@ -1,6 +1,7 @@
 package com.yuziyan.seckill.controller;
 
 
+import cn.hutool.core.util.ObjectUtil;
 import com.yuziyan.seckill.entity.SeckillItem;
 import com.yuziyan.seckill.entity.User;
 import com.yuziyan.seckill.exception.UserException;
@@ -38,12 +39,12 @@ public class UserController {
             throw new UserException("非法登用户，请重新录！");
         }
         //调用业务层登录方法
-        Boolean res = userService.login(username, password);
-        if (!res) {
+        User user = userService.login(username, password);
+        if (ObjectUtil.isEmpty(user)) {
             throw new UserException("用户名或密码错误");
         }
         //把当前用户信息存在session里
-        session.setAttribute("user",new User(username,password));
+        session.setAttribute("user",user);
         //转发到秒杀商品列表页
         return "forward:/getSeckillItemList";
     }

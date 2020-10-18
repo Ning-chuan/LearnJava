@@ -18,9 +18,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean login(String username,String password) {
-        User res = userDao.getUserByNameAndPassword(username, DigestUtil.md5Hex(password));
-        return res == null ? false : true;
+    public User login(String username,String password) {
+        return userDao.getUserByNameAndPassword(username, DigestUtil.md5Hex(password));
     }
 
 }
