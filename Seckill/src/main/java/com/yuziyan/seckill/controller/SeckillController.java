@@ -4,10 +4,12 @@ import cn.hutool.core.util.ObjectUtil;
 import com.yuziyan.seckill.dto.ResponseResult;
 import com.yuziyan.seckill.dto.SeckillUrl;
 import com.yuziyan.seckill.entity.SeckillItem;
+import com.yuziyan.seckill.entity.SeckillOrder;
 import com.yuziyan.seckill.entity.User;
 import com.yuziyan.seckill.exception.SeckillException;
 import com.yuziyan.seckill.exception.UserException;
 import com.yuziyan.seckill.service.SeckillItemService;
+import com.yuziyan.seckill.service.SeckillOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,8 @@ public class SeckillController {
 
     @Autowired
     SeckillItemService seckillItemService;
+    @Autowired
+    SeckillOrderService seckillOrderService;
 
     @RequestMapping("/getSeckillItemList")
     public String getSeckillItemList(Model model){
@@ -33,7 +37,7 @@ public class SeckillController {
 
     @RequestMapping("/itemDetail/{itemId}")
     public String itemDetail(@PathVariable("itemId")Integer itemId, Model model){
-        System.out.println("SeckillController.toItemDetail");
+        //System.out.println("SeckillController.toItemDetail");
         if (itemId <= 0) {
             throw new SeckillException("无效的参数");
         }
@@ -71,6 +75,42 @@ public class SeckillController {
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
+        return result;
+    }
+
+    @RequestMapping(value = "/startSeckill/{itemId}/{md5}",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseResult<SeckillOrder> startSeckill(@PathVariable("itemId")Integer itemId,@PathVariable("md5") String md5,HttpSession session){
+        ResponseResult<SeckillOrder> result = new ResponseResult<>();
+        //1.验证
+        //  验证用户是否登录：
+        User user = (User) session.getAttribute("user");
+        if (ObjectUtil.isEmpty(user)) {
+            result.setSuccess(false);
+            result.setMessage("no user login");
+            return result;
+        }
+        //  验证md5标记
+        boolean mark = seckillItemService.verifyMd5Str(itemId,md5);
+        if (!mark) {
+            result.setSuccess(false);
+            result.setMessage("Commodity dose not exist or not during the event! ");
+            return result;
+        }
+
+        //2.验证通过，调用业务层的方法，执行秒杀操作
+        boolean success = seckillItemService.executeSeckill(user,itemId);
+        if (!success) {
+            //此时秒杀执行失败，设置失败信息，并返回。
+            result.setSuccess(false);
+            result.setMessage("很遗憾，未能抢购成功。");
+            return result;
+        }
+
+        //3.代码走到这里说明秒杀执行成功了，调用业务层方法，生成订单（状态为未支付）
+        seckillOrderService.createOrder(itemId,user.getId(),1);
+        result.setSuccess(true);
+        result.setMessage("ok");
         return result;
     }
 

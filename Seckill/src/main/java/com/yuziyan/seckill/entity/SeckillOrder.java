@@ -11,8 +11,22 @@ public class SeckillOrder {
     private int id;
     private int seckillItemId;
     private int userId;
+    // state表示订单的状态
+    // 1 下单成功，未支付
+    // TODO 未支付还存在一个逻辑
+    // 2 已支付
     private int state;
     private Date createTime;
+
+    public SeckillOrder() {
+    }
+    public SeckillOrder(int seckillItemId, int userId, int state, Date createTime) {
+        this.id = id;
+        this.seckillItemId = seckillItemId;
+        this.userId = userId;
+        this.state = state;
+        this.createTime = createTime;
+    }
 
     public int getId() {
         return id;

@@ -16,7 +16,7 @@
             margin-top: 3%;
         }
 
-        #timeDiv {
+        #countdownBox {
             background-color: #D00414;
             line-height: 120px;
             margin: auto auto;
@@ -55,6 +55,7 @@
                 showCountDown("sec_min", m);
                 showCountDown("sec_sec", s);
             }
+
             //展示时间的方法: 参数一:容纳时刻的元素 参数二:时刻
             function showCountDown(timeELe, value) {
                 if (value < 10) {
@@ -67,24 +68,34 @@
                 //alert("秒杀开始!");
                 //获取秒杀url
                 var itemId = ${seckillItem.id};
-                $.post("/Seckill/getSeckillUrl/"+itemId,{},function (result) {
+                $.post("/Seckill/getSeckillUrl/" + itemId, {}, function (result) {
                     //获取响应结果中的seckillUrl
                     var seckillUrl = result['data'];
                     console.log(result);
-                    if(seckillUrl['enable']){
+                    if (seckillUrl['enable']) {
                         //此时seckillUrl可用
-                        //调整秒杀按钮样式：
+                        //调整秒杀按钮样式（可用）：
                         $("#seckillBtn").removeClass("disabled");
                         $("#seckillBtn").removeClass("btn-default");
                         $("#seckillBtn").addClass("btn-primary");
                         //添加一次点击事件
-                        $("#seckillBtn").one('click',function () {
+                        $("#seckillBtn").one('click', function () {
                             //点击开始抢购按钮之后，开始秒杀
-                            alert("开始秒杀！")
+                            //调整秒杀按钮样式（不可用）：
+                            $("#seckillBtn").addClass("disabled");
+                            //alert("开始秒杀！")
+                            //发送秒杀商品请求：(md5用于后端验证)
+                            $.post("/Seckill/startSeckill/"+itemId+"/"+seckillUrl['md5'],{},function (result) {
+                                console.log(result);
+
+                            });
+
                         });
+                    } else {
+                        //seckillUrl为不可用，说明要么没有这个商品，要么不再活动期间
+                        alert("亲，不再活动期间哦！")
                     }
                 });
-
 
 
             }
@@ -115,7 +126,7 @@
                 var timeGap = startTime - serverTime;
                 //开启一个计时事件（活动开始倒计时）
                 var toStartTimer = setInterval(function () {
-                    if (timeGap <= 0){
+                    if (timeGap <= 0) {
                         //此时活动已经开始
                         //清除 活动开始倒计时 定时事件
                         clearInterval(toStartTimer)
@@ -125,7 +136,7 @@
                         // 修改展示文字：
                         $('#afterText').text("后结束抢购");
                         // 计算此刻距离活动结束的时间差，需要重新获取当前时间，依然从服务器获取：
-                        $.get("/Seckill/getServerTime",{},function (result) {
+                        $.get("/Seckill/getServerTime", {}, function (result) {
                             serverTime = result['data'];
                             timeGap = endTime - serverTime;
                             //开启倒计时：
@@ -141,7 +152,7 @@
                                 formatTimeAndShow(timeGap);
                                 //更新时间差
                                 timeGap = timeGap - 1000;
-                            },1000);
+                            }, 1000);
                         });
                         //返回当前函数,不再往后执行
                         return;
@@ -173,20 +184,18 @@
         </div>
 
         <%-- 当前场次 00 天 00 时 00 分 00 后结束抢购 --%>
-        <div id="seckillBox">
-            <div id="timeDiv">
-                <span class="st">当前场次</span>
+        <div id="countdownBox">
+            <span class="st">当前场次</span>
 
-                <span id="sec_day" class="timeNum">00</span>
-                <span class="st">天</span>
-                <span id="sec_hour" class="timeNum">00</span>
-                <span class="st">时</span>
-                <span id="sec_min" class="timeNum">00</span>
-                <span class="st">分</span>
-                <span id="sec_sec" class="timeNum">00</span>
+            <span id="sec_day" class="timeNum">00</span>
+            <span class="st">天</span>
+            <span id="sec_hour" class="timeNum">00</span>
+            <span class="st">时</span>
+            <span id="sec_min" class="timeNum">00</span>
+            <span class="st">分</span>
+            <span id="sec_sec" class="timeNum">00</span>
 
-                <span id="afterText" class="st">后开始抢购</span>
-            </div>
+            <span id="afterText" class="st">后开始抢购</span>
         </div>
         <div style="text-align:center">
             <button id="seckillBtn" class="btn btn-default disabled">开始抢购</button>

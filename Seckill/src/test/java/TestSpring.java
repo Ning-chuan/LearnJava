@@ -1,6 +1,9 @@
 import cn.hutool.crypto.digest.DigestUtil;
+import com.yuziyan.seckill.dao.RedisDao;
+import com.yuziyan.seckill.dao.SeckillOrderDao;
 import com.yuziyan.seckill.dao.UserDao;
 import com.yuziyan.seckill.entity.SeckillItem;
+import com.yuziyan.seckill.entity.SeckillOrder;
 import com.yuziyan.seckill.entity.User;
 import com.yuziyan.seckill.service.SeckillItemService;
 import com.yuziyan.seckill.service.UserService;
@@ -13,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,6 +31,12 @@ public class TestSpring {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    RedisDao redisDao;
+
+    @Autowired
+    SeckillOrderDao seckillOrderDao;
     
     /**
      * 用于测试：spring-test使用
@@ -79,4 +89,31 @@ public class TestSpring {
         SeckillItem seckillItem = seckillItemService.getSeckillItem(1);
         System.out.println("seckillItem = " + seckillItem);
     }
+
+    /**
+     * 用于测试：redis减库存的方法
+     */
+    @Test
+    public void test6(){
+        Integer res = redisDao.reduceStock("stock_1");
+        System.out.println("res = " + res);
+    }
+
+    /**
+     * 用于测试：seckillItemDao.updateStock()方法
+     */
+    @Test
+    public void test7(){
+        seckillItemService.updateMySQLStock(-1, 1);
+
+    }
+
+    /**
+     * 用于测试：添加秒杀订单方法
+     */
+    @Test
+    public void test8(){
+        seckillOrderDao.addSeckillOrder(new SeckillOrder(1,1,1,new Date()));
+    }
+
 }

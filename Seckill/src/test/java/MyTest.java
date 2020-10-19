@@ -1,8 +1,14 @@
+import com.yuziyan.seckill.dao.RedisDao;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
 public class MyTest {
+
+
+
+
     /**
      * 用于测试：null与布尔值的转换
      */
@@ -15,4 +21,6 @@ public class MyTest {
         long time = new Date().getTime();
         System.out.println("time = " + time);
     }
+
+
 }
