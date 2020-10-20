@@ -1,7 +1,12 @@
 package com.yuziyan.seckill.service;
 
+import com.yuziyan.seckill.entity.SeckillOrder;
+
 public interface SeckillOrderService {
 
-    void createOrder(Integer itemId,Integer userId,Integer state);
+    SeckillOrder createOrder(Integer itemId, Integer userId, Integer state);
 
+    SeckillOrder getOrderByOrderCode(String orderCode);
+
+    void checkExpireOrder();
 }

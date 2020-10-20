@@ -95,8 +95,8 @@ public class TestSpring {
      */
     @Test
     public void test6(){
-        Integer res = redisDao.reduceStock("stock_1");
-        System.out.println("res = " + res);
+//        Integer res = redisDao.reduceStock("stock_1");
+//        System.out.println("res = " + res);
     }
 
     /**
@@ -115,5 +115,31 @@ public class TestSpring {
     public void test8(){
         seckillOrderDao.addSeckillOrder(new SeckillOrder(1,1,1,new Date()));
     }
+
+    /**
+     * 用于测试：
+     */
+    @Test
+    public void test9(){
+        /*
+        SeckillOrder seckillOrder = seckillOrderDao.selectOrderByOrderCode("0319eab5b9034e0388166e20977f9cdf");
+        System.out.println("seckillOrder = " + seckillOrder);
+
+        System.out.println("===============================");
+
+        List<SeckillOrder> ordersByState = seckillOrderDao.getOrdersByState(1);
+        for (SeckillOrder order : ordersByState) {
+            System.out.println("order = " + order);
+        }
+
+         */
+
+        seckillOrderDao.setStateByOrderCode("8446dc2a708b43499e37466b79c90df2", 4);
+
+    }
+
+
+
+
 
 }

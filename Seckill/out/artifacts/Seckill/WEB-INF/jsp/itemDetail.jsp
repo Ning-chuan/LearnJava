@@ -86,7 +86,17 @@
                             //alert("开始秒杀！")
                             //发送秒杀商品请求：(md5用于后端验证)
                             $.post("/Seckill/startSeckill/"+itemId+"/"+seckillUrl['md5'],{},function (result) {
-                                console.log(result);
+                                // console.log('result==========>'+result);
+                                // console.log('=====================================');
+                                // console.log('result[data]==========>'+result['data'])
+                                var seckillOrder = result['data'];
+                                if (seckillOrder){
+                                    //此时订单成功生成，跳转到支付页：
+                                    window.location.href = "/Seckill/toOrderPage/"+seckillOrder['orderCode'];
+                                }else{
+                                    //订单没有生成，说明没抢到，或是多次请求，或是没有该订单等等，提示用户
+                                    console.log("很遗憾，没能抢到商品哦。");
+                                }
 
                             });
 

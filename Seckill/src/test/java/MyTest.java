@@ -1,3 +1,4 @@
+import cn.hutool.core.util.IdUtil;
 import com.yuziyan.seckill.dao.RedisDao;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

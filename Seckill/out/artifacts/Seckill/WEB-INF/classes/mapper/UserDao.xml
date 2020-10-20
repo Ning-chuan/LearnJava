@@ -4,15 +4,15 @@
 <mapper namespace="com.yuziyan.seckill.dao.UserDao">
 
     <select id="getUser" resultType="User" parameterType="int">
-        select * from user where id = #{id}
+        select * from seckill.user where id = #{id}
     </select>
 
     <select id="getUserByNameAndPassword" resultType="User">
-        select * from user where name=#{name} and password=#{password}
+        select * from seckill.user where name=#{name} and password=#{password}
     </select>
 
     <insert id="addUser" parameterType="User">
-        insert into user (name,password,phone) values (#{name},#{password},#{phone});
+        insert into seckill.user (name,password,phone) values (#{name},#{password},#{phone});
     </insert>
 
 </mapper>

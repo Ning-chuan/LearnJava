@@ -4,15 +4,15 @@
 <mapper namespace="com.yuziyan.seckill.dao.SeckillItemDao">
 
     <select id="getAllSeckillItems" resultType="seckillItem">
-        select * from seckill_item
+        select * from seckill.seckill_item
     </select>
 
     <select id="getSeckillItemById" resultType="SeckillItem">
-        select * from seckill_item where id = #{id}
+        select * from seckill.seckill_item where id = #{id}
     </select>
 
     <update id="updateStock">
-        update seckill_item set number = number + #{changeNum} where id = #{itemId}
+        update seckill.seckill_item set number = number + #{changeNum} where id = #{itemId}
     </update>
 
 </mapper>

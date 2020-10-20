@@ -60,6 +60,7 @@ public class RedisDao {
     }
 
     private final static String REDUCE_STOCK_LUA_SCRIPT;
+    private final static String ADD_STOCK_LUA_SCRIPT;
 
     static {
 
@@ -78,6 +79,26 @@ public class RedisDao {
         sb.append("return -2;");
 
         REDUCE_STOCK_LUA_SCRIPT = sb.toString();
+
+
+        // 加库存脚本
+        StringBuilder sb2 = new StringBuilder();
+        sb2.append("if (redis.call('exists', KEYS[1]) == 1) then");
+        sb2.append("    local stock = tonumber(redis.call('get', KEYS[1]));");
+        sb2.append("    if (stock == -1) then");
+        sb2.append("        redis.call('set', KEYS[1],1)");
+        sb2.append("    end;");
+        sb2.append("    if (stock == 0) then");
+        sb2.append("        redis.call('set', KEYS[1],1)");
+        sb2.append("    end;");
+        sb2.append("    if (stock > 0) then");
+        sb2.append("        redis.call('incrby', KEYS[1], 1);");
+        sb2.append("        return stock + 1;");
+        sb2.append("    end;");
+        sb2.append("end;");
+        sb2.append("return -2;");
+
+        ADD_STOCK_LUA_SCRIPT = sb2.toString();
     }
 
     /**
@@ -111,6 +132,31 @@ public class RedisDao {
                 if (nativeConnection instanceof Jedis) {
                     Object temp = ((Jedis) nativeConnection).eval(REDUCE_STOCK_LUA_SCRIPT, keys, args);
                     //System.out.println(" =====================>" + temp);
+                    return Integer.valueOf(String.valueOf(temp));
+                }
+
+                return null;
+            }
+        });
+        return result;
+    }
+
+    /**
+     * lua脚本加库存
+     */
+    public Integer addStock(String key) {
+        // 脚本里的KEYS参数
+        final List<String> keys = new ArrayList<String>();
+        keys.add(key);
+        // 脚本里的ARGV参数
+        final List<String> args = new ArrayList<String>();
+
+        Integer result = redisTemplate.execute(new RedisCallback<Integer>() {
+
+            public Integer doInRedis(RedisConnection connection) throws DataAccessException {
+                Object nativeConnection = connection.getNativeConnection();
+                if (nativeConnection instanceof Jedis) {
+                    Object temp = ((Jedis) nativeConnection).eval(ADD_STOCK_LUA_SCRIPT, keys, args);
                     return Integer.valueOf(String.valueOf(temp));
                 }
 

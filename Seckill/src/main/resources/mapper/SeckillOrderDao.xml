@@ -4,8 +4,21 @@
 <mapper namespace="com.yuziyan.seckill.dao.SeckillOrderDao">
 
     <insert id="addSeckillOrder" parameterType="seckillOrder">
-        insert into seckill_order (seckill_item_id,user_id,state,create_time)
-        values (#{seckillItemId},#{userId},#{state},#{createTime})
+        insert into seckill_order (order_code,seckill_item_id,user_id,state,create_time,order_timeout)
+        values (#{orderCode},#{seckillItemId},#{userId},#{state},#{createTime},#{orderTimeout});
     </insert>
+
+    <select id="selectOrderByOrderCode" parameterType="String" resultType="seckillOrder">
+        select * from seckill_order where order_code = #{orderCode};
+    </select>
+
+    <select id="getOrdersByState" parameterType="int" resultType="seckillOrder">
+        select * from seckill_order where state = #{state };
+    </select>
+
+    <update id="setStateByOrderCode">
+        update seckill_order set state = #{state} where order_code = #{orderCode};
+    </update>
+
 
 </mapper>

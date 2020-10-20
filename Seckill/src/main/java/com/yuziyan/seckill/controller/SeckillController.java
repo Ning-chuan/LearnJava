@@ -1,6 +1,7 @@
 package com.yuziyan.seckill.controller;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.yuziyan.seckill.dto.ResponseResult;
 import com.yuziyan.seckill.dto.SeckillUrl;
 import com.yuziyan.seckill.entity.SeckillItem;
@@ -108,10 +109,32 @@ public class SeckillController {
         }
 
         //3.代码走到这里说明秒杀执行成功了，调用业务层方法，生成订单（状态为未支付）
-        seckillOrderService.createOrder(itemId,user.getId(),1);
+        SeckillOrder order = seckillOrderService.createOrder(itemId, user.getId(), 1);
         result.setSuccess(true);
+        result.setData(order);
         result.setMessage("ok");
         return result;
+    }
+
+    //转发到订单页面
+    @RequestMapping("/toOrderPage/{orderCode}")
+    public String toOrderPage(@PathVariable("orderCode") String orderCode,Model model){
+        //需要存订单和商品两个参数，在订单页面中获取
+        SeckillOrder order = seckillOrderService.getOrderByOrderCode(orderCode);
+        SeckillItem seckillItem = seckillItemService.getSeckillItem(order.getSeckillItemId());
+        model.addAttribute("order", order);
+        model.addAttribute("seckillItem", seckillItem);
+        return "orderPage";
+    }
+
+    @RequestMapping(value = "/payOrder/{orderCode}")
+    public String payOrder(@PathVariable("orderCode") String orderCode){
+        System.out.println("orderCode = " + orderCode);
+        if (StrUtil.isEmpty(orderCode)) {
+            throw new SeckillException("没有该订单");
+        }
+        //1.调用dao
+        return null;
     }
 
 }
