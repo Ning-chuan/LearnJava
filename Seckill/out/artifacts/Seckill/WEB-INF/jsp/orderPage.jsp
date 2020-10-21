@@ -41,7 +41,7 @@
     <script type="text/javascript">
         /*jQuery入口函数 网页中DOM结构加载完毕时执行*/
         $(function () {
-            //格式化倒计时并展示 参数：事件差
+            //函数：格式化倒计时并展示 参数：时间差
             function formatTimeAndShow(timeGap) {
                 //定义 分 秒
                 var m, s;
@@ -52,7 +52,7 @@
                 showCountDown("sec_sec", s);
             }
 
-            //展示时间的方法: 参数一:容纳时刻的元素 参数二:时刻
+            //函数: 展示时间 参数一:容纳时刻的元素 参数二:时刻
             function showCountDown(timeELe, value) {
                 if (value < 10) {
                     value = "0" + value;
@@ -61,7 +61,7 @@
             }
 
 
-            //得到long类型的起始、结束时间
+            //得到long类型的订单超时时间
             var endTime = ${order.createTime.time} + ${order.orderTimeout*1000};
             //ajax请求 获取服务器当前时间
             $.get("/Seckill/getServerTime", {}, function (result) {
@@ -88,6 +88,8 @@
                         clearInterval(expireTimer)
                         // 设置支付按钮不可用
                         $("#payBtn").addClass("disabled");
+                        //取消按钮的提交属性
+                        $("#payBtn").removeAttr("type");
                         //返回当前函数,不再往后执行
                         return;
                     }
@@ -99,6 +101,8 @@
                 }, 1000);
 
             });
+
+
 
         });
     </script>
@@ -122,7 +126,10 @@
             <span id="afterText" class="st">后失效</span>
         </div>
         <div style="text-align:center">
-            <button id="payBtn" class="btn btn-success">支付</button>
+            <form action="/Seckill/payOrder" method="get">
+                <input type="hidden" name="orderCode" value="${order.orderCode}">
+                <button id="payBtn" class="btn btn-success" type="submit">支付</button>
+            </form>
         </div>
 
 

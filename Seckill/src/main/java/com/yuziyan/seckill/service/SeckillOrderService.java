@@ -9,4 +9,6 @@ public interface SeckillOrderService {
     SeckillOrder getOrderByOrderCode(String orderCode);
 
     void checkExpireOrder();
+
+    boolean payOrder(String orderCode);
 }

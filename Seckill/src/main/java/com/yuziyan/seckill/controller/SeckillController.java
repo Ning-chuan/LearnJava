@@ -127,14 +127,18 @@ public class SeckillController {
         return "orderPage";
     }
 
-    @RequestMapping(value = "/payOrder/{orderCode}")
-    public String payOrder(@PathVariable("orderCode") String orderCode){
+    //处理支付订单请求
+    @RequestMapping(value = "/payOrder")
+    public String payOrder(String orderCode){
         System.out.println("orderCode = " + orderCode);
         if (StrUtil.isEmpty(orderCode)) {
             throw new SeckillException("没有该订单");
         }
-        //1.调用dao
-        return null;
+        boolean res = seckillOrderService.payOrder(orderCode);
+        if (res){
+            return "paySuccess";
+        }
+        throw new SeckillException("支付失败，可能的原因有：订单不存在，订单已支付，订单已过期。");
     }
 
 }

@@ -69,4 +69,18 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
         }
     }
 
+    @Override
+    public boolean payOrder(String orderCode) {
+        //调用dao查看该订单的状态
+        SeckillOrder seckillOrder = seckillOrderDao.selectOrderByOrderCode(orderCode);
+        Integer state = seckillOrder.getState();
+        if (ObjectUtil.isEmpty(seckillOrder) || state != 1) {
+            return false;
+        }
+        //设置订单状态为已支付
+        seckillOrderDao.setStateByOrderCode(orderCode, 2);
+        return true;
+    }
+
+
 }
