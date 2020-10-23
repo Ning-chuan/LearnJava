@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--<div id="app">-->
+<!--    <div>{{title}}</div>-->
+<!--    <ul>-->
+<!--        <li v-for="fruit in fruits" >{{fruit}}</li>-->
+<!--    </ul>-->
+<!--</div>-->
+
+<div id="app">
+    <todo>
+        <todo-title slot="todo-title" v-bind:title="title"></todo-title>
+        <todo-items slot="todo-items" v-for="fruit in fruits" :fruit="fruit"></todo-items>
+    </todo>
+</div>
+
+
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component('todo', {
+        template: '<div>\n' +
+            '    <slot name="todo-title"></slot>\n' +
+            '    <ul>\n' +
+            '        <slot name="todo-items"></slot>\n' +
+            '    </ul>\n' +
+            '</div>'
+    });
+    Vue.component('todo-title', {
+        props: ['title'],
+        template: '<div>{{title}}</div>'
+    })
+    Vue.component('todo-items', {
+        props: ['fruit'],
+        template: '<li>{{fruit}}</li>'
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            title: "水果",
+            fruits: ['西瓜', '香蕉', '芒果', '葡萄']
+        }
+    });
+</script>
+</body>
+</html>
